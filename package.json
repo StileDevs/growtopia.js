@@ -3,7 +3,7 @@
   "version": "1.0.1",
   "description": "A package to create a growtopia private servers.",
   "main": "dist/index.js",
-  "types": "dist/index.d.js",
+  "typings": "dist/index.d.js",
   "scripts": {
     "test": "rimraf dist && npm run build && npm run build:ts && node test/index.js",
     "build": "cd lib && node-gyp rebuild",
@@ -23,12 +23,12 @@
   "license": "MIT",
   "gypfile": true,
   "dependencies": {
+    "@types/node": "^20.1.5",
     "node-addon-api": "^6.1.0",
-    "node-gyp": "^9.3.1"
+    "node-gyp": "^9.3.1",
+    "typescript": "^5.0.4"
   },
   "devDependencies": {
-    "@types/node": "^20.1.5",
-    "rimraf": "^5.0.1",
-    "typescript": "^5.0.4"
+    "rimraf": "^5.0.1"
   }
 }
