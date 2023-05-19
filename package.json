@@ -1,13 +1,21 @@
 {
   "name": "growtopia.js",
   "version": "1.0.0",
-  "description": "",
+  "description": "A package to create a growtopia private servers.",
   "main": "dist/index.js",
   "scripts": {
     "test": "rimraf dist && npm run build && npm run build:ts && node test/index.js",
     "build": "cd lib && node-gyp rebuild",
     "build:ts": "tsc",
     "install": "npm run build"
+  },
+  "homepage": "https://github.com/JadlionHD/growtopia.js#readme",
+  "bugs": {
+    "url": "https://github.com/JadlionHD/growtopia.js/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JadlionHD/growtopia.js.git"
   },
   "keywords": [],
   "author": "JadlionHD <jadlion.dev@gmail.com>",
