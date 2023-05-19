@@ -1,0 +1,25 @@
+{
+  "name": "growtopia.js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "rimraf dist && npm run build && npm run build:ts && node test/index.js",
+    "build": "cd lib && node-gyp rebuild",
+    "build:ts": "tsc",
+    "install": "npm run build"
+  },
+  "keywords": [],
+  "author": "JadlionHD <jadlion.dev@gmail.com>",
+  "license": "MIT",
+  "gypfile": true,
+  "dependencies": {
+    "node-addon-api": "^6.1.0",
+    "node-gyp": "^9.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.1.5",
+    "rimraf": "^5.0.1",
+    "typescript": "^5.0.4"
+  }
+}
