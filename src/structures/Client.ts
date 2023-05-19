@@ -29,6 +29,10 @@ class Client extends EventEmitter {
     return super.on(event, listener);
   }
 
+  public send(id: number, count: number, packets: Buffer[]) {
+    return this.client.send(id, count, packets);
+  }
+
   public emitter(emit: (...args: any[]) => void) {
     return this.client.setEmit(emit);
   }
