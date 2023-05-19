@@ -1,5 +1,5 @@
 import EventEmitter from "events";
-import { ClientType } from "../types/client";
+import { ClientType } from "../../types/client";
 const Native = require("../../lib/build/Release/index.node").Client;
 
 interface DataObject {

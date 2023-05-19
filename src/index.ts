@@ -1,3 +1,3 @@
-import { Client } from "./structures/Client";
+export type * from "../types/index";
 
-export { Client };
+export { Client } from "./structures/Client";
