@@ -3,6 +3,7 @@
   "version": "1.0.1",
   "description": "A package to create a growtopia private servers.",
   "main": "dist/index.js",
+  "types": "dist/index.d.js",
   "scripts": {
     "test": "rimraf dist && npm run build && npm run build:ts && node test/index.js",
     "build": "cd lib && node-gyp rebuild",
