@@ -10,7 +10,9 @@ A fork of [GrowSockets](https://github.com/Pogtopia/GrowSockets) to create a gro
 
 ## Installation
 
-- Soon
+```sh
+npm i growtopia.js
+```
 
 ## Example
 
@@ -44,9 +46,10 @@ client.on("raw", (netID, data) => {
 console.log(`Started ENet server ${client.config.port} on ${client.config.ip}`);
 ```
 
-## Documentation
+## Links
 
-- [https://jadlionhd.github.io/growtopia.js/](https://jadlionhd.github.io/growtopia.js/)
+- [Documentation](https://jadlionhd.github.io/growtopia.js/)
+- [Discord Server](https://discord.gg/sGrxfKZY5t)
 
 ## Credits
 
