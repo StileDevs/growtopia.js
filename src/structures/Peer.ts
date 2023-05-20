@@ -4,11 +4,9 @@ import { Variant } from "../packets/Variant";
 import { Client } from "./Client";
 
 class Peer<T> {
-  // @ts-ignore
   public data: T;
 
   constructor(public client: Client, netID: number) {
-    // @ts-ignore
     (this.data as any) = { netID };
     // this.netID = netID;
 
