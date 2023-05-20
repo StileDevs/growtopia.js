@@ -4,12 +4,14 @@ import { Variant } from "../packets/Variant";
 import { Client } from "./Client";
 
 class Peer<T> {
-  public data?: T;
+  // @ts-ignore
+  public data: T;
 
-  constructor(public client: Client, public netID: number) {
-    (this.data as any).netID = netID;
-
+  constructor(public client: Client, netID: number) {
+    // @ts-ignore
+    (this.data as any) = { netID };
     // this.netID = netID;
+
     this.client = client;
   }
 
@@ -18,7 +20,7 @@ class Peer<T> {
    * @param data An argument of packets that contains the `parse()` function or just an array of Buffers.
    */
   public send(...data: Sendable[]) {
-    Peer.send(this.client._client, this.netID, ...data);
+    Peer.send(this.client._client, (this.data as any).netID, ...data);
   }
 
   /**
