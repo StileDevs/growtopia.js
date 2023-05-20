@@ -3,9 +3,13 @@ import { Sendable } from "../../types/packets";
 import { Variant } from "../packets/Variant";
 import { Client } from "./Client";
 
-class Peer {
+class Peer<T> {
+  public data?: T;
+
   constructor(public client: Client, public netID: number) {
-    this.netID = netID;
+    (this.data as any).netID = netID;
+
+    // this.netID = netID;
     this.client = client;
   }
 
@@ -54,15 +58,15 @@ class Peer {
   public disconnect(type: "now" | "later" | "normal" = "later") {
     switch (type) {
       case "normal": {
-        this.client._client.disconnect(this.netID);
+        this.client._client.disconnect((this.data as any).netID);
         break;
       }
       case "later": {
-        this.client._client.disconnectLater(this.netID);
+        this.client._client.disconnectLater((this.data as any).netID);
         break;
       }
       case "now": {
-        this.client._client.disconnectNow(this.netID);
+        this.client._client.disconnectNow((this.data as any).netID);
         break;
       }
     }
