@@ -1,11 +1,12 @@
 {
   "name": "growtopia.js",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A package to create a growtopia private servers.",
   "main": "dist/index.js",
   "types": "index.d.ts",
   "scripts": {
     "test": "rimraf dist && npm run build && npm run build:ts && node test/index.js",
+    "docs:gen": "typedoc",
     "build": "cd lib && node-gyp rebuild",
     "build:ts": "tsc",
     "install": "npm run build && npm run build:ts"
@@ -29,6 +30,7 @@
     "typescript": "^5.0.4"
   },
   "devDependencies": {
-    "rimraf": "^5.0.1"
+    "rimraf": "^5.0.1",
+    "typedoc": "^0.24.7"
   }
 }

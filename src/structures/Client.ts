@@ -7,13 +7,13 @@ interface DataObject {
 }
 
 class Client extends EventEmitter {
-  public client: ClientType;
+  public _client: ClientType;
   public config: { ip: string; port: number; maxPeers: number };
 
   constructor(ip = "127.0.0.1", port = 17091, maxPeers = 1024) {
     super();
 
-    this.client = new Native(ip, port) as ClientType;
+    this._client = new Native(ip, port) as ClientType;
     this.config = {
       ip,
       port,
@@ -30,20 +30,20 @@ class Client extends EventEmitter {
   }
 
   public send(id: number, count: number, packets: Buffer[]) {
-    return this.client.send(id, count, packets);
+    return this._client.send(id, count, packets);
   }
 
-  public emitter(emit: (...args: any[]) => void) {
-    return this.client.setEmit(emit);
+  private emitter(emit: (...args: any[]) => void) {
+    return this._client.setEmit(emit);
   }
 
   public init() {
-    this.client.create(1024);
+    this._client.create(1024);
 
     this.emitter(this.emit.bind(this));
 
     const acceptPromise = () =>
-      new Promise((resolve) => setImmediate(() => resolve(this.client.service())));
+      new Promise((resolve) => setImmediate(() => resolve(this._client.service())));
 
     const loop = async () => {
       while (true) await acceptPromise();
