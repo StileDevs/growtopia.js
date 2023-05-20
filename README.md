@@ -15,36 +15,38 @@ A fork of [GrowSockets](https://github.com/Pogtopia/GrowSockets) to create a gro
 ## Example
 
 ```js
-const { Client } = require("growtopia.js");
+const { Client, TextPacket, Peer } = require("growtopia.js");
 
-const server = new Client("127.0.0.1", 17091);
+const client = new Client("127.0.0.1", 17091);
 
-server.on("connect", (netID) => {
+client.on("connect", (netID) => {
   console.log(`Connected netID ${netID}`);
+  const peer = new Peer(client, netID);
+  peer.send(TextPacket.from(0x1));
 });
 
-server.on("disconnect", (netID) => {
+client.on("disconnect", (netID) => {
   console.log(`Disconnected netID ${netID}`);
 });
 
-server.on("raw", (netID, data) => {
+client.on("raw", (netID, data) => {
   const type = data.readInt32LE();
-  const parsed = server.parseAction(data);
+  const parsed = client.parseAction(data);
 
   if (type === 3) {
     if (parsed.action === "quit") {
-      server.client.disconnect(netID);
+      client._client.disconnect(netID);
     }
   }
-  console.log(netID, type, parsed);
+  console.log({ netID, type, parsed });
 });
 
-console.log(`Starting enet server ${server.config.port} on ${server.config.ip}`);
+console.log(`Started ENet server ${client.config.port} on ${client.config.ip}`);
 ```
 
 ## Documentation
 
-- Soon
+- [https://jadlionhd.github.io/growtopia.js/](https://jadlionhd.github.io/growtopia.js/)
 
 ## Credits
 
