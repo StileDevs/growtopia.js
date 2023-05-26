@@ -1,29 +1,35 @@
-import EventEmitter from "events";
-import { ClientType } from "../../types/client";
+import EventEmitter from "eventemitter3";
+import { ClientOptions, ClientType } from "../../types/client";
+import { PacketTypes } from "../util/Constants";
+import { parseAction } from "../util/Utils";
+import { Peer } from "./Peer";
+import { ActionEvent, LoginInfo } from "../../types";
+import { TankPacket } from "../packets/TankPacket";
+import { WebServer } from "./WebServer";
 const Native = require("../../lib/build/Release/index.node").Client;
-
-interface DataObject {
-  [key: string]: string | number;
-}
 
 class Client extends EventEmitter {
   public _client: ClientType;
-  public config: { ip: string; port: number; maxPeers: number };
+  public config: { ip: string; port: number };
 
-  constructor(ip = "127.0.0.1", port = 17091, maxPeers = 1024) {
+  constructor(ip = "127.0.0.1", port = 17091, public options: ClientOptions) {
     super();
 
     this._client = new Native(ip, port) as ClientType;
     this.config = {
       ip,
-      port,
-      maxPeers
+      port
     };
-    this.init();
+    this.options = Object.assign({ https: false }, options);
   }
 
   public on(event: "connect", listener: (netID: number) => void): this;
   public on(event: "raw", listener: (netID: number, data: Buffer) => void): this;
+  public on<T>(event: "action", listener: (peer: Peer<T>, data: ActionEvent) => void): this;
+  public on<T>(event: "tank", listener: (peer: Peer<T>, data: TankPacket) => void): this;
+  public on<T>(event: "auth", listener: (peer: Peer<T>, data: LoginInfo) => void): this;
+  public on(event: "ready", listener: () => void): this;
+  public on(event: "error", listener: (error: Error, data?: Buffer) => void): this;
   public on(event: "disconnect", listener: (netID: number) => void): this;
   public on(event: string | symbol, listener: (...args: any[]) => void): this {
     return super.on(event, listener);
@@ -37,42 +43,71 @@ class Client extends EventEmitter {
     return this._client.setEmit(emit);
   }
 
-  public init() {
-    this._client.create(1024);
+  public listen(maxPeers: number) {
+    try {
+      this._client.create(maxPeers);
 
-    this.emitter(this.emit.bind(this));
+      this.emitter(this.emit.bind(this));
 
-    const acceptPromise = () =>
-      new Promise((resolve) => setImmediate(() => resolve(this._client.service())));
+      const acceptPromise = () =>
+        new Promise((resolve) => setImmediate(() => resolve(this._client.service())));
 
-    const loop = async () => {
-      while (true) await acceptPromise();
-    };
+      const loop = async () => {
+        while (true) await acceptPromise();
+      };
 
-    loop();
+      loop();
+      this.emit("ready");
+      this.startWeb();
+      this.handleEvent();
+    } catch {
+      this.emit("error", new Error("Failed to initialize ENet server"));
+    }
   }
 
-  public parseAction(chunk: Buffer) {
-    let data: DataObject = {};
-    chunk[chunk.length - 1] = 0;
+  private startWeb() {
+    if (this.options.https) {
+      WebServer(this.config.ip, this.config.port);
+    }
+  }
 
-    let str = chunk.toString("utf-8", 4);
-    const lines = str.split("\n");
+  private handleEvent() {
+    this.on("raw", (netID, data) => {
+      const type = data.readInt32LE();
+      const peer = new Peer(this, netID);
 
-    lines.forEach((line) => {
-      if (line.startsWith("|")) line = line.slice(1);
-      const info = line.split("|");
+      console.log({ type });
+      switch (type) {
+        case PacketTypes.STR: {
+          const parsed = parseAction(data);
+          this.emit("auth", peer, parsed);
+          break;
+        }
 
-      let key = info[0];
-      let val = info[1];
+        case PacketTypes.ACTION: {
+          const parsed = parseAction(data);
+          this.emit("action", peer, parsed);
+          break;
+        }
 
-      if (key && val) {
-        if (val.endsWith("\x00")) val = val.slice(0, -1);
-        data[key] = val;
+        case PacketTypes.TANK: {
+          if (data.length < 60) {
+            this.emit("error", new Error("Received invalid tank packet"), data);
+            return peer.disconnect();
+          }
+
+          const tank = TankPacket.fromBuffer(data);
+
+          this.emit("tank", peer, tank);
+          break;
+        }
+
+        default: {
+          this.emit("error", new Error(`Got unknown packet type of ${type}`), data);
+          break;
+        }
       }
     });
-
-    return data;
   }
 }
 

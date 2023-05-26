@@ -11,3 +11,8 @@ export interface ClientType {
   disconnectNow: (peerID: number) => void;
   toggleNewPacket: () => void;
 }
+
+export interface ClientOptions {
+  /** Built-in https web server */
+  https: boolean;
+}

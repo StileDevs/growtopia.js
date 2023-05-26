@@ -1,5 +1,9 @@
 # Growtopia.js
 
+![Github Version](https://img.shields.io/github/package-json/v/jadlionhd/growtopia.js?style=flat-square)
+![NPM Version](https://img.shields.io/npm/v/growtopia.js?style=flat-square)
+![NPM Minified](https://img.shields.io/bundlephobia/min/growtopia.js?style=flat-square)
+
 A fork of [GrowSockets](https://github.com/Pogtopia/GrowSockets) to create a growtopia private servers.
 
 ## Requirements
@@ -19,7 +23,15 @@ npm i growtopia.js
 ```js
 const { Client, TextPacket, Peer } = require("growtopia.js");
 
-const client = new Client("127.0.0.1", 17091);
+const client = new Client("127.0.0.1", 17091, { https: true });
+
+client.on("ready", () => {
+  console.log(`Starting ENet server ${client.config.port} on ${client.config.ip}`);
+});
+
+client.on("error", (err) => {
+  console.log("Something wrong", err);
+});
 
 client.on("connect", (netID) => {
   console.log(`Connected netID ${netID}`);
@@ -32,18 +44,25 @@ client.on("disconnect", (netID) => {
 });
 
 client.on("raw", (netID, data) => {
-  const type = data.readInt32LE();
-  const parsed = client.parseAction(data);
-
-  if (type === 3) {
-    if (parsed.action === "quit") {
-      client._client.disconnect(netID);
-    }
-  }
-  console.log({ netID, type, parsed });
+  console.log("raw", data);
 });
 
-console.log(`Started ENet server ${client.config.port} on ${client.config.ip}`);
+client.on("action", (peer, data) => {
+  console.log("action", { peer, data });
+  if (data.action === "quit") {
+    peer.disconnect();
+  }
+});
+
+client.on("tank", (peer, tank) => {
+  console.log("tank", { peer, tank });
+});
+
+client.on("auth", (peer, data) => {
+  console.log("auth", { peer, data });
+});
+
+client.listen(1024);
 ```
 
 ## Links
