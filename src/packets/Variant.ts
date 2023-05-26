@@ -2,7 +2,7 @@ import { TankPacket } from "./TankPacket";
 
 // Types
 import { VariantArg, VariantOptions } from "../../types/packets";
-import { VariantType } from "../structures/Constants";
+import { VariantTypes } from "../util/Constants";
 
 /**
  * Represents the Variant class.
@@ -42,7 +42,7 @@ class Variant {
 
       switch (typeof arg) {
         case "string": {
-          buf.push(VariantType.STRING);
+          buf.push(VariantTypes.STRING);
 
           const bytes = new Uint32Array(1);
           bytes[0] = arg.length;
@@ -59,10 +59,10 @@ class Variant {
 
           if (arg < 0) {
             bytes = new Int32Array(1);
-            buf.push(VariantType.SIGNED_INT);
+            buf.push(VariantTypes.SIGNED_INT);
           } else {
             bytes = new Uint32Array(1);
-            buf.push(VariantType.UNSIGNED_INT);
+            buf.push(VariantTypes.UNSIGNED_INT);
           }
 
           bytes[0] = arg;
@@ -75,7 +75,7 @@ class Variant {
         case "object": {
           if (!Array.isArray(arg)) return;
 
-          const type = VariantType[`FLOAT_${arg.length}` as "FLOAT_1" | "FLOAT_2"];
+          const type = VariantTypes[`FLOAT_${arg.length}` as "FLOAT_1" | "FLOAT_2"];
           if (!type) return;
 
           buf.push(type);

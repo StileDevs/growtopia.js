@@ -1,0 +1,7 @@
+{
+  "C_Cpp.default.includePath": [
+    "lib/include",
+    "${env:LOCALAPPDATA}\\node-gyp\\Cache\\18.16.0\\include\\node",
+    "${workspaceFolder}\\node_modules\\node-addon-api"
+  ]
+}

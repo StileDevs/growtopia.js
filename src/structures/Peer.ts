@@ -6,7 +6,7 @@ import { Client } from "./Client";
 class Peer<T> {
   public data: T;
 
-  constructor(public client: Client, netID: number) {
+  constructor(private client: Client, netID: number) {
     (this.data as any) = { netID };
     // this.netID = netID;
 
