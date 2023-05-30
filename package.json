@@ -7,7 +7,7 @@
   "scripts": {
     "test": "rimraf dist && npm run build && npm run build:ts && node test/index.js",
     "test:nonative": "rimraf dist && npm run build:ts && node test/index.js",
-    "docs:gen": "typedoc",
+    "docs:gen": "rimraf docs && typedoc",
     "build": "cd lib && node-gyp rebuild",
     "build:ts": "tsc",
     "install": "npm run build && npm run build:ts"

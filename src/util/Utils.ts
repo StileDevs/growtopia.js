@@ -1,6 +1,4 @@
-interface DataObject {
-  [key: string]: string | number;
-}
+import { DataObject } from "../../types";
 
 export function parseAction(chunk: Buffer) {
   let data: DataObject = {};
