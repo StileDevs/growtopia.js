@@ -210,7 +210,7 @@ Napi::Value Client::connect(NAPI_CB)
   ENetPeer *peer = this->peers[peerID];
 
   ENetAddress address;
-  enet_address_set_host(&address, this->ip.c_str());
+  enet_address_set_host(&address, ipAddress.c_str());
   address.port = port;
 
   peer = enet_host_connect(this->client, &address, 2, 0);
