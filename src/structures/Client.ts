@@ -84,7 +84,6 @@ class Client extends EventEmitter {
       const type = data.readInt32LE();
       const peer = new Peer(this, netID);
 
-      console.log({ type });
       switch (type) {
         case PacketTypes.STR: {
           const parsed = parseAction(data);

@@ -120,7 +120,10 @@ void Client::start_service(NAPI_CB)
       }
 
       // clang-format off
-      this->eventEmit.Call({Napi::String::New(env, "disconnect"), Napi::Number::New(env, *reinterpret_cast<unsigned int *>(peer->data))});
+      this->eventEmit.Call({
+        Napi::String::New(env, "disconnect"),
+        Napi::Number::New(env, *reinterpret_cast<unsigned int *>(peer->data))
+      });
       // clang-format on
 
       peers.erase(userNetID);
@@ -203,9 +206,9 @@ Napi::Value Client::connect(NAPI_CB)
 {
   Napi::Env env = info.Env();
 
-  uint32_t peerID = info[0].As<Napi::Number>().Uint32Value();
-  std::string ipAddress = info[1].As<Napi::String>().Utf8Value();
-  uint32_t port = info[2].As<Napi::Number>().Uint32Value();
+  std::string ipAddress = info[0].As<Napi::String>().Utf8Value();
+  uint32_t port = info[1].As<Napi::Number>().Uint32Value();
+  uint32_t peerID = info[2].As<Napi::Number>().Uint32Value();
 
   ENetPeer *peer = this->peers[peerID];
 
