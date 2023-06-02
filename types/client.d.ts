@@ -10,6 +10,8 @@ export interface ClientType {
   disconnectLater: (peerID: number) => void;
   disconnectNow: (peerID: number) => void;
   toggleNewPacket: () => void;
+  getPeerPing: (netID: number) => number;
+  connect: (ipAddress: string, port: number, peerID: number) => boolean;
 }
 
 export interface ClientOptions {

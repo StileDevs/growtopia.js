@@ -11,6 +11,9 @@ export enum VariantTypes {
   SIGNED_INT = 0x9
 }
 
+/**
+ * Growtopia Packet Types
+ */
 export enum PacketTypes {
   UNK,
   HELLO,
@@ -23,6 +26,9 @@ export enum PacketTypes {
   CLIENT_LOG_RES
 }
 
+/**
+ * Growtopia Tank Packet Types
+ */
 export enum TankTypes {
   STATE = 0,
   CALL_FUNCTION,

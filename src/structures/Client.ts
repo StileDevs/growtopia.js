@@ -39,6 +39,14 @@ class Client extends EventEmitter {
     return this._client.send(id, count, packets);
   }
 
+  public getPing(id: number) {
+    return this._client.getPeerPing(id);
+  }
+
+  public connect(ipAddress: string, port: number, peerID: number) {
+    return this._client.connect(ipAddress, port, peerID);
+  }
+
   private emitter(emit: (...args: any[]) => void) {
     return this._client.setEmit(emit);
   }

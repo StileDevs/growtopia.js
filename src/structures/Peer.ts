@@ -14,6 +14,13 @@ class Peer<T> {
   }
 
   /**
+   * Get Peer ping (RTT) from server.
+   */
+  public get ping() {
+    return this.client.getPing((this.data as any).netID);
+  }
+
+  /**
    * Sends multiple packets to a single peer.
    * @param data An argument of packets that contains the `parse()` function or just an array of Buffers.
    */

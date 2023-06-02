@@ -28,6 +28,8 @@ private:
   void disconnectLater(NAPI_CB);
   void disconnectNow(NAPI_CB);
   void toggleNewPacket(NAPI_CB);
+  Napi::Value getPeerPing(NAPI_CB);
+  Napi::Value connect(NAPI_CB);
 
 private:
   Napi::FunctionReference eventEmit;

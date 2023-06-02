@@ -188,6 +188,40 @@ void Client::toggleNewPacket(NAPI_CB)
   this->usingNewPacket = !this->usingNewPacket;
 }
 
+Napi::Value Client::getPeerPing(NAPI_CB)
+{
+  Napi::Env env = info.Env();
+
+  uint32_t peerID = info[0].As<Napi::Number>().Uint32Value();
+
+  ENetPeer *peer = this->peers[peerID];
+
+  return Napi::Number::New(env, peer->roundTripTime);
+}
+
+Napi::Value Client::connect(NAPI_CB)
+{
+  Napi::Env env = info.Env();
+
+  uint32_t peerID = info[0].As<Napi::Number>().Uint32Value();
+  std::string ipAddress = info[1].As<Napi::String>().Utf8Value();
+  uint32_t port = info[2].As<Napi::Number>().Uint32Value();
+
+  ENetPeer *peer = this->peers[peerID];
+
+  ENetAddress address;
+  enet_address_set_host(&address, this->ip.c_str());
+  address.port = port;
+
+  peer = enet_host_connect(this->client, &address, 2, 0);
+  if (!peer)
+  {
+    return Napi::Boolean::New(env, false);
+  }
+
+  return Napi::Boolean::New(env, true);
+}
+
 Napi::Object Client::Init(Napi::Env env, Napi::Object exports)
 {
   // clang-format off
@@ -203,6 +237,8 @@ Napi::Object Client::Init(Napi::Env env, Napi::Object exports)
     InstanceMethod<&Client::disconnectLater>("disconnectLater"),
     InstanceMethod<&Client::disconnectNow>("disconnectNow"),
     InstanceMethod<&Client::toggleNewPacket>("toggleNewPacket"),
+    InstanceMethod<&Client::getPeerPing>("getPeerPing"),
+    InstanceMethod<&Client::connect>("connect")
   });
   // clang-format on
 
