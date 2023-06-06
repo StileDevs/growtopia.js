@@ -36,30 +36,29 @@ client.on("error", (err) => {
 client.on("connect", (netID) => {
   console.log(`Connected netID ${netID}`);
   const peer = new Peer(client, netID);
-  peer.send(TextPacket.from(0x1));
+  peer.send(TextPacket.from(0x1)); // Send Hello Packet
 });
 
 client.on("disconnect", (netID) => {
   console.log(`Disconnected netID ${netID}`);
 });
 
-client.on("raw", (netID, data) => {
-  console.log("raw", data);
-});
-
+// Receive Game message packet
 client.on("action", (peer, data) => {
-  console.log("action", { peer, data });
+  console.log(`Peer (${peer.data.netID}) action`, { data });
   if (data.action === "quit") {
     peer.disconnect();
   }
 });
 
+// Receive Tank update packet
 client.on("tank", (peer, tank) => {
-  console.log("tank", { peer, tank });
+  console.log(`Peer (${peer.data.netID}) tank`, { tank });
 });
 
-client.on("auth", (peer, data) => {
-  console.log("auth", { peer, data });
+// Receive Generic text packet
+client.on("text", (peer, data) => {
+  console.log(`Peer (${peer.data.netID}) text`, { data });
 });
 
 client.listen(1024);

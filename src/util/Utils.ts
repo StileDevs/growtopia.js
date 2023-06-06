@@ -1,6 +1,6 @@
 import { DataObject } from "../../types";
 
-export function parseAction(chunk: Buffer) {
+export function parseText(chunk: Buffer) {
   let data: DataObject = {};
   chunk[chunk.length - 1] = 0;
 

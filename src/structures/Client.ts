@@ -1,7 +1,7 @@
 import EventEmitter from "eventemitter3";
 import { ClientOptions, ClientType } from "../../types/client";
 import { PacketTypes } from "../util/Constants";
-import { parseAction } from "../util/Utils";
+import { parseText } from "../util/Utils";
 import { Peer } from "./Peer";
 import { ActionEvent, LoginInfo } from "../../types";
 import { TankPacket } from "../packets/TankPacket";
@@ -27,7 +27,7 @@ class Client extends EventEmitter {
   public on(event: "raw", listener: (netID: number, data: Buffer) => void): this;
   public on<T>(event: "action", listener: (peer: Peer<T>, data: ActionEvent) => void): this;
   public on<T>(event: "tank", listener: (peer: Peer<T>, data: TankPacket) => void): this;
-  public on<T>(event: "auth", listener: (peer: Peer<T>, data: LoginInfo) => void): this;
+  public on<T>(event: "text", listener: (peer: Peer<T>, data: LoginInfo) => void): this;
   public on(event: "ready", listener: () => void): this;
   public on(event: "error", listener: (error: Error, data?: Buffer) => void): this;
   public on(event: "disconnect", listener: (netID: number) => void): this;
@@ -45,6 +45,10 @@ class Client extends EventEmitter {
 
   public connect(ipAddress: string, port: number, peerID: number) {
     return this._client.connect(ipAddress, port, peerID);
+  }
+
+  public toggleNewPacket() {
+    return this._client.toggleNewPacket();
   }
 
   private emitter(emit: (...args: any[]) => void) {
@@ -86,13 +90,14 @@ class Client extends EventEmitter {
 
       switch (type) {
         case PacketTypes.STR: {
-          const parsed = parseAction(data);
-          this.emit("auth", peer, parsed);
+          const parsed = parseText(data);
+
+          this.emit("text", peer, parsed);
           break;
         }
 
         case PacketTypes.ACTION: {
-          const parsed = parseAction(data);
+          const parsed = parseText(data);
           this.emit("action", peer, parsed);
           break;
         }
