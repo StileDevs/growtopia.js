@@ -8,9 +8,9 @@ A fork of [GrowSockets](https://github.com/Pogtopia/GrowSockets) to create a gro
 
 ## Requirements
 
-- [Node.js v12+](https://nodejs.org/en)
+- [Node.js v16+](https://nodejs.org/en)
 - [C++ Build Tools](https://visualstudio.microsoft.com/vs/features/cplusplus/) (Linux: build-essential)
-- [Python 3](https://www.python.org/downloads/)
+- [Python (Recommeded v3.11)](https://www.python.org/downloads/)
 
 ## Installation
 
