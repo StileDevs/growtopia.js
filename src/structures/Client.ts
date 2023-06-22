@@ -12,7 +12,7 @@ class Client extends EventEmitter {
   public _client: ClientType;
   public config: ClientOptions;
 
-  constructor(options: ClientOptions) {
+  constructor(options?: ClientOptions) {
     super();
 
     this.config = Object.assign(
