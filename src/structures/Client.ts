@@ -10,17 +10,31 @@ const Native = require("../../lib/build/Release/index.node").Client;
 
 class Client extends EventEmitter {
   public _client: ClientType;
-  public config: { ip: string; port: number };
+  public config: ClientOptions;
 
-  constructor(ip = "127.0.0.1", port = 17091, public options: ClientOptions) {
+  constructor(options: ClientOptions) {
     super();
 
-    this._client = new Native(ip, port) as ClientType;
-    this.config = {
-      ip,
-      port
-    };
-    this.options = Object.assign({ https: false }, options);
+    this.config = Object.assign(
+      {
+        https: {
+          enable: true,
+          url: "127.0.0.1",
+          type2: false
+        },
+        ip: "127.0.0.1",
+        port: 17091,
+        enet: {
+          maxPeers: 1024,
+          useNewPacket: {
+            asClient: false
+          }
+        }
+      },
+      options
+    );
+
+    this._client = new Native(this.config.ip, this.config.port) as ClientType;
   }
 
   public on(event: "connect", listener: (netID: number) => void): this;
@@ -55,9 +69,9 @@ class Client extends EventEmitter {
     return this._client.setEmit(emit);
   }
 
-  public listen(maxPeers: number) {
+  public listen() {
     try {
-      this._client.create(maxPeers);
+      this._client.create(this.config.enet.maxPeers, this.config.enet.useNewPacket.asClient);
 
       this.emitter(this.emit.bind(this));
 
@@ -78,8 +92,8 @@ class Client extends EventEmitter {
   }
 
   private startWeb() {
-    if (this.options.https) {
-      WebServer(this.config.ip, this.config.port);
+    if (this.config.https.enable) {
+      WebServer(this.config.ip, this.config.port, this.config.https.type2);
     }
   }
 

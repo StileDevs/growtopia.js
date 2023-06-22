@@ -50,6 +50,7 @@ void Client::create(NAPI_CB)
   Napi::Env env = info.Env();
 
   uint32_t maxPeers = info[0].As<Napi::Number>().Uint32Value();
+  bool isClient = info[1].As<Napi::Boolean>().Value();
 
   if (enet_initialize() != 0)
     return Napi::Error::New(env, "ENet failed to initialize").ThrowAsJavaScriptException();
@@ -61,7 +62,10 @@ void Client::create(NAPI_CB)
   this->client = enet_host_create(&address, maxPeers, 2, 0, 0);
 
   this->client->checksum = enet_crc32;
-  this->client->usingNewPacket = usingNewPacket;
+  if (isClient)
+    this->client->usingNewPacket = usingNewPacket;
+  else
+    this->client->usingNewPacketForServer = usingNewPacket;
 
   enet_host_compress_with_range_coder(this->client);
 }

@@ -9,7 +9,7 @@ const options = {
   cert: readFileSync(path.join(__dirname, "..", "..", "misc", "ssl", "server.crt"))
 };
 
-export function WebServer(ip: string, port: number) {
+export function WebServer(ip: string, port: number, type2 = false) {
   const app = express();
   let done = false;
 
@@ -18,7 +18,9 @@ export function WebServer(ip: string, port: number) {
 
   app.use("/growtopia/server_data.php", (req, res) => {
     res.send(
-      `server|${ip}\nport|${port}\ntype|1\n#maint|Server is Maintenance\nmeta|growtopiajs\nRTENDMARKERBS1001`
+      `server|${ip}\nport|${port}\ntype|1\n${
+        type2 ? "type2|1" : ""
+      }\n#maint|Server is Maintenance\nmeta|growtopiajs\nRTENDMARKERBS1001`
     );
   });
 

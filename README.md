@@ -23,7 +23,7 @@ npm i growtopia.js
 ```js
 const { Client, TextPacket, Peer } = require("growtopia.js");
 
-const client = new Client("127.0.0.1", 17091, { https: true });
+const client = new Client();
 
 client.on("ready", () => {
   console.log(`Starting ENet server ${client.config.port} on ${client.config.ip}`);
@@ -36,14 +36,17 @@ client.on("error", (err) => {
 client.on("connect", (netID) => {
   console.log(`Connected netID ${netID}`);
   const peer = new Peer(client, netID);
-  peer.send(TextPacket.from(0x1)); // Send Hello Packet
+  peer.send(TextPacket.from(0x1));
 });
 
 client.on("disconnect", (netID) => {
   console.log(`Disconnected netID ${netID}`);
 });
 
-// Receive Game message packet
+client.on("raw", (netID, data) => {
+  console.log("raw", data);
+});
+
 client.on("action", (peer, data) => {
   console.log(`Peer (${peer.data.netID}) action`, { data });
   if (data.action === "quit") {
@@ -51,17 +54,17 @@ client.on("action", (peer, data) => {
   }
 });
 
-// Receive Tank update packet
 client.on("tank", (peer, tank) => {
   console.log(`Peer (${peer.data.netID}) tank`, { tank });
 });
 
-// Receive Generic text packet
 client.on("text", (peer, data) => {
+  console.log(peer.ping);
+
   console.log(`Peer (${peer.data.netID}) text`, { data });
 });
 
-client.listen(1024);
+client.listen();
 ```
 
 ## Links
