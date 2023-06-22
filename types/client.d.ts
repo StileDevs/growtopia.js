@@ -16,14 +16,14 @@ export interface ClientType {
 
 export interface ClientOptions {
   /** Built-in https web server */
-  https: {
-    enable: boolean;
-    url: string;
-    type2: boolean;
+  https?: {
+    enable?: boolean;
+    url?: string;
+    type2?: boolean;
   };
-  ip: string;
-  port: number;
-  enet: {
+  ip?: string;
+  port?: number;
+  enet?: {
     maxPeers?: number;
     useNewPacket?: {
       asClient?: boolean;

@@ -92,9 +92,9 @@ class Client extends EventEmitter {
   }
 
   private startWeb() {
-    if (this.config.https.enable) {
+    if (!this.config.https) return;
+    if (this.config.https.enable)
       WebServer(this.config.ip, this.config.port, this.config.https.type2);
-    }
   }
 
   private handleEvent() {
