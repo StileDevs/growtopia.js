@@ -17,13 +17,15 @@ export interface ClientType {
 export interface ClientOptions {
   /** Built-in https web server */
   https?: {
+    ip?: string;
+    port?: number;
     enable?: boolean;
     url?: string;
     type2?: boolean;
   };
-  ip?: string;
-  port?: number;
   enet?: {
+    ip?: string;
+    port?: number;
     maxPeers?: number;
     useNewPacket?: {
       asClient?: boolean;

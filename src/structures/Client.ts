@@ -18,13 +18,15 @@ class Client extends EventEmitter {
     this.config = Object.assign(
       {
         https: {
+          ip: "127.0.0.1",
+          port: 17091,
           enable: true,
           url: "127.0.0.1",
           type2: false
         },
-        ip: "127.0.0.1",
-        port: 17091,
         enet: {
+          ip: "127.0.0.1",
+          port: 17091,
           maxPeers: 1024,
           useNewPacket: {
             asClient: false
@@ -34,7 +36,7 @@ class Client extends EventEmitter {
       options
     );
 
-    this._client = new Native(this.config.ip, this.config.port) as ClientType;
+    this._client = new Native(this.config.enet.ip, this.config.enet.port) as ClientType;
   }
 
   public on(event: "connect", listener: (netID: number) => void): this;
@@ -94,7 +96,7 @@ class Client extends EventEmitter {
   private startWeb() {
     if (!this.config.https) return;
     if (this.config.https.enable)
-      WebServer(this.config.ip, this.config.port, this.config.https.type2);
+      WebServer(this.config.https.ip, this.config.https.port, this.config.https.type2);
   }
 
   private handleEvent() {
