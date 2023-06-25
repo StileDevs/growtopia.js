@@ -1653,7 +1653,7 @@ enet_protocol_send_outgoing_commands (ENetHost * host, ENetEvent * event, int ch
 
       newHeader -> integrity [0] = ENET_HOST_TO_NET_16 (randomAroundPort);
       newHeader -> integrity [1] = ENET_HOST_TO_NET_16 (randomAroundPort ^ port);
-      newHeader -> integrity [2] = ENET_HOST_TO_NET_16 (enet_host_random (host) & 0x67DA | 0x9005);
+      newHeader -> integrity [2] = ENET_HOST_TO_NET_16 (enet_host_random (host) & 0x61D2 | 0x920D);
     }
 
     for (int sendPass = 0, continueSending = 0; sendPass <= continueSending; ++ sendPass)
