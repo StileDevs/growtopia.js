@@ -21,7 +21,6 @@ class Client extends EventEmitter {
           ip: "127.0.0.1",
           port: 17091,
           enable: true,
-          url: "127.0.0.1",
           type2: false
         },
         enet: {

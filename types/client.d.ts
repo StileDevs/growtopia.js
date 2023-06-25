@@ -20,7 +20,6 @@ export interface ClientOptions {
     ip?: string;
     port?: number;
     enable?: boolean;
-    url?: string;
     type2?: boolean;
   };
   enet?: {
