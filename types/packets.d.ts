@@ -48,3 +48,23 @@ export interface VariantOptions {
  * Represents the available type of Objects that are sendable to peers.
  */
 export type Sendable = Buffer | TextPacket | TankPacket | Variant;
+
+export interface VariantTypeBase {
+  index: number;
+  type: number;
+  typeName: string;
+}
+
+export interface VariantTypeNumber extends VariantTypeBase {
+  value: number;
+}
+
+export interface VariantTypeFloat extends VariantTypeBase {
+  value: number[];
+}
+
+export interface VariantTypeString extends VariantTypeBase {
+  value: string;
+}
+
+export type VariantArray = VariantTypeString | VariantTypeNumber | VariantTypeFloat;

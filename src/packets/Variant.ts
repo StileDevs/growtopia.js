@@ -1,7 +1,7 @@
 import { TankPacket } from "./TankPacket";
 
 // Types
-import { VariantArg, VariantOptions } from "../../types/packets";
+import { VariantArg, VariantArray, VariantOptions } from "../../types/packets";
 import { VariantTypes } from "../util/Constants";
 
 /**
@@ -29,6 +29,80 @@ class Variant {
     }
 
     return new Variant(opts as VariantOptions, args);
+  }
+
+  public static toArray(data: Buffer): VariantArray[] {
+    let arr: VariantArray[] = [];
+
+    let pos = 60;
+    const count = data.readUint8(60);
+    pos += 1;
+
+    for (let i = 1; i <= count; i++) {
+      const index = data.readUint8(pos);
+      pos += 1;
+
+      const type = data.readUint8(pos);
+      const typeName = VariantTypes[type];
+
+      pos += 1;
+
+      switch (type) {
+        case VariantTypes.STRING: {
+          const strLength = data.readUint32LE(pos);
+          pos += 4;
+
+          const value = data.subarray(pos, pos + strLength).toString();
+          pos += strLength;
+
+          arr.push({ index, type, typeName, value });
+          break;
+        }
+        case VariantTypes.UNSIGNED_INT: {
+          const value = data.readUint32LE(pos);
+          pos += 4;
+
+          arr.push({ index, type, typeName, value });
+
+          break;
+        }
+        case VariantTypes.SIGNED_INT: {
+          const value = data.readInt32LE(pos);
+          pos += 4;
+
+          arr.push({ index, type, typeName, value });
+          break;
+        }
+        case VariantTypes.FLOAT_1: {
+          const value = [data.readFloatLE(pos)];
+
+          pos += 4;
+          arr.push({ index, type, typeName, value });
+          break;
+        }
+        case VariantTypes.FLOAT_2: {
+          let value = [];
+
+          for (let i = 1; i <= 2; i++) {
+            value.push(data.readFloatLE(pos));
+            pos += 4;
+          }
+          arr.push({ index, type, typeName, value });
+          break;
+        }
+        case VariantTypes.FLOAT_3: {
+          let value = [];
+
+          for (let i = 1; i <= 3; i++) {
+            value.push(data.readFloatLE(pos));
+            pos += 4;
+          }
+          arr.push({ index, type, typeName, value });
+          break;
+        }
+      }
+    }
+    return arr;
   }
 
   /**
