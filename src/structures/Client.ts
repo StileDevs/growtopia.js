@@ -6,7 +6,7 @@ import { Peer } from "./Peer";
 import { ActionEvent, LoginInfo } from "../../types";
 import { TankPacket } from "../packets/TankPacket";
 import { WebServer } from "./WebServer";
-const Native = require("../../lib/build/Release/index.node").Client;
+const Native = require("../../build/Release/index.node").Client;
 
 class Client extends EventEmitter {
   public _client: ClientType;
