@@ -26,7 +26,9 @@ const { Client, TextPacket, Peer } = require("growtopia.js");
 const client = new Client();
 
 client.on("ready", () => {
-  console.log(`Starting ENet server ${client.config.port} on ${client.config.ip}`);
+  console.log(
+    `ENet server: port ${client.config.enet.port} on ${client.config.enet.ip}\nHttps server: port ${client.config.https.port} on ${client.config.https.ip}`
+  );
 });
 
 client.on("error", (err) => {
