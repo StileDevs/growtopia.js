@@ -8,9 +8,7 @@ A fork of [GrowSockets](https://github.com/Pogtopia/GrowSockets) to create a gro
 
 ## Requirements
 
-- [Node.js v16+](https://nodejs.org/en)
-- [C++ Build Tools](https://visualstudio.microsoft.com/vs/features/cplusplus/) (Linux: build-essential)
-- [Python (Recommeded v3.11)](https://www.python.org/downloads/)
+- [Node.js v16+](https://nodejs.org/en) (No need to build from source)
 
 ## Installation
 
@@ -67,6 +65,17 @@ client.on("text", (peer, data) => {
 });
 
 client.listen();
+```
+
+## Building
+
+### Requirements
+
+- [C++ Build Tools](https://visualstudio.microsoft.com/vs/features/cplusplus/) (Linux: build-essential)
+- [Python (Recommeded v3.11)](https://www.python.org/downloads/)
+
+```sh
+npm i growtopia.js --build-from-source
 ```
 
 ## Links
