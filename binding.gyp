@@ -1,7 +1,7 @@
 {
   "targets": [
     {
-      "target_name": "index",
+      "target_name": "gtjs",
       "sources": [
         "lib/main.cc",
         "lib/client.cc",
