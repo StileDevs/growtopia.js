@@ -30,7 +30,7 @@
     "module_path": "./build/Release/",
     "package_name": "gtjs-v{version}-{platform}-{arch}.tar.gz",
     "host": "https://github.com/JadlionHD/growtopia.js/releases/download/",
-    "remote_path": "{version}"
+    "remote_path": "v{version}"
   },
   "dependencies": {
     "@mapbox/node-pre-gyp": "^1.0.10",
