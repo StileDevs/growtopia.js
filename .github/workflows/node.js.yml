@@ -33,4 +33,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: gtjs-${{github.sha}}
-          path: ${{github.workspace}}\build\stage
+          path: /build/stage
