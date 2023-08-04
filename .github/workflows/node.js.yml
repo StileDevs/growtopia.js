@@ -29,8 +29,3 @@ jobs:
       - run: npm run build --if-present --build-from-source
       - run: npm test
       - run: npm run package
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: gtjs-${{github.sha}}
-          path: /build/stage
