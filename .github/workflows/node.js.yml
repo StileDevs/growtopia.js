@@ -36,9 +36,6 @@ jobs:
           arch: ${{ matrix.arch }}
           distro: ${{ matrix.distro }}
           run: npm run build --if-present --build-from-source
-          env:
-            artifact_name: gtjs-${{ matrix.distro }}_${{ matrix.arch }}
-
       - run: npm run build --if-present --build-from-source
       - run: npm test
       - run: npm run package
