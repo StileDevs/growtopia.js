@@ -25,13 +25,20 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: uraimo/run-on-arch-action@v2
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
       - run: npm ci
+      - uses: uraimo/run-on-arch-action@v2
+        with:
+          arch: ${{ matrix.arch }}
+          distro: ${{ matrix.distro }}
+          run: npm run build --if-present --build-from-source
+          env:
+            artifact_name: gtjs-${{ matrix.distro }}_${{ matrix.arch }}
+
       - run: npm run build --if-present --build-from-source
       - run: npm test
       - run: npm run package
