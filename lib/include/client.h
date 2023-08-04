@@ -28,8 +28,14 @@ private:
   void disconnectLater(NAPI_CB);
   void disconnectNow(NAPI_CB);
   void toggleNewPacket(NAPI_CB);
-  Napi::Value getPeerPing(NAPI_CB);
+
+  ENetPeer *getPeer(uint32_t peerID);
   Napi::Value connect(NAPI_CB);
+
+  Napi::Value getPeerRTT(NAPI_CB);
+  Napi::Value getPeerState(NAPI_CB);
+  // Napi::Value getPeerPing(NAPI_CB);
+  // Napi::Value getPeerPing(NAPI_CB);
 
 private:
   Napi::FunctionReference eventEmit;

@@ -54,7 +54,13 @@
 #endif
 
 #if !defined(HAS_SOCKLEN_T) && !defined(__socklen_t_defined)
+<<<<<<< Updated upstream
 typedef unsigned int socklen_t;
+=======
+#ifndef __socklen_t_defined
+typedef unsigned int socklen_t;
+#endif
+>>>>>>> Stashed changes
 #endif
 
 #ifndef MSG_NOSIGNAL

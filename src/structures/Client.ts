@@ -15,25 +15,22 @@ class Client extends EventEmitter {
   constructor(options?: ClientOptions) {
     super();
 
-    this.config = Object.assign(
-      {
-        https: {
-          ip: "127.0.0.1",
-          port: 17091,
-          enable: true,
-          type2: false
-        },
-        enet: {
-          ip: "127.0.0.1",
-          port: 17091,
-          maxPeers: 1024,
-          useNewPacket: {
-            asClient: false
-          }
-        }
+    this.config = {
+      https: {
+        ip: options.https?.ip ?? "127.0.0.1",
+        port: options.https?.port ?? 17091,
+        enable: options.https?.enable ?? true,
+        type2: options.https?.type2 ?? false
       },
-      options
-    );
+      enet: {
+        ip: options.enet?.ip ?? "127.0.0.1",
+        port: options.enet?.port ?? 17091,
+        maxPeers: options.enet?.maxPeers ?? 1024,
+        useNewPacket: {
+          asClient: options.enet?.useNewPacket?.asClient ?? false
+        }
+      }
+    };
 
     this._client = new Native(this.config.enet.ip, this.config.enet.port) as ClientType;
   }
@@ -52,10 +49,6 @@ class Client extends EventEmitter {
 
   public send(id: number, count: number, packets: Buffer[]) {
     return this._client.send(id, count, packets);
-  }
-
-  public getPing(id: number) {
-    return this._client.getPeerPing(id);
   }
 
   public connect(ipAddress: string, port: number, peerID: number) {

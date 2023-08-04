@@ -14,10 +14,17 @@ class Peer<T> {
   }
 
   /**
-   * Get Peer ping (RTT) from server.
+   * Get ENetPeer Round Trip Time (RTT).
    */
   public get ping() {
-    return this.client.getPing((this.data as any).netID);
+    return this.client._client.getPeerRTT((this.data as any).netID);
+  }
+
+  /**
+   * Get [ENetPeerState](http://enet.bespin.org/enet_8h.html#a058bc368c507eb86cb47f3946f38d558).
+   */
+  public get state() {
+    return this.client._client.getPeerState((this.data as any).netID);
   }
 
   /**
