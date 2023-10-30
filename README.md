@@ -9,7 +9,7 @@ A fork of [GrowSockets](https://github.com/Pogtopia/GrowSockets) to create a gro
 ## Features
 
 - Stable
-- Plugins system ([example](https://github.com/JadlionHD/growtopia.js/tree/main/test/module-system))
+- Plugins system
 - Built-in ItemsDat tools & Web server
 
 ## Requirements
@@ -75,7 +75,7 @@ client.listen();
 
 ## Plugins
 
-To create your own plugin, take a look [here](https://github.com/JadlionHD/growtopia.js/tree/main/test/module-system)
+> To create your own plugin, take a look [here](https://github.com/JadlionHD/growtopia.js/tree/main/test/module-system)
 
 A example adding plugin to your server:
 
