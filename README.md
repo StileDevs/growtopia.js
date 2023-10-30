@@ -6,6 +6,12 @@
 
 A fork of [GrowSockets](https://github.com/Pogtopia/GrowSockets) to create a growtopia private servers.
 
+## Features
+
+- Stable
+- Plugins system ([example](https://github.com/JadlionHD/growtopia.js/tree/main/test/module-system))
+- Built-in ItemsDat tools & Web server
+
 ## Requirements
 
 - [Node.js v16+](https://nodejs.org/en) (No need to build from source)
@@ -66,6 +72,27 @@ client.on("text", (peer, data) => {
 
 client.listen();
 ```
+
+## Plugins
+
+To create your own plugin, take a look [here](https://github.com/JadlionHD/growtopia.js/tree/main/test/module-system)
+
+A example adding plugin to your server:
+
+```js
+const client = new Client({
+  // Add a plugin here
+  plugins: [new IModule(), new WorldGen()]
+});
+```
+
+## Plugins list
+
+> Open a PR to add your plugin here
+
+| Name       | Link                                                                             | Description                 |
+| ---------- | -------------------------------------------------------------------------------- | --------------------------- |
+| HelloWorld | [Github](https://github.com/JadlionHD/growtopia.js/tree/main/test/module-system) | Test sending hello world :D |
 
 ## Building
 
