@@ -1,5 +1,5 @@
 import EventEmitter from "eventemitter3";
-import { ClientOptions, ClientType } from "../../types/client";
+import { Caching, ClientOptions, ClientType } from "../../types/client";
 import { PacketTypes } from "../util/Constants";
 import { parseText } from "../util/Utils";
 import { Peer } from "./Peer";
@@ -11,11 +11,13 @@ const Native = require("../../build/Release/gtjs.node").Client;
 class Client extends EventEmitter {
   public _client: ClientType;
   public config: ClientOptions;
+  public cache: Caching;
 
   constructor(options?: ClientOptions) {
     super();
 
     this.config = {
+      plugins: options.plugins ?? [],
       https: {
         ip: options.https?.ip ?? "127.0.0.1",
         port: options.https?.port ?? 17091,
@@ -32,7 +34,13 @@ class Client extends EventEmitter {
       }
     };
 
+    this.config.plugins;
+
     this._client = new Native(this.config.enet.ip, this.config.enet.port) as ClientType;
+
+    this.cache = {
+      players: new Map<number, number>()
+    };
   }
 
   public on(event: "connect", listener: (netID: number) => void): this;
@@ -77,22 +85,36 @@ class Client extends EventEmitter {
       };
 
       loop();
+      this._startWeb();
+      this._handleEvent();
       this.emit("ready");
-      this.startWeb();
-      this.handleEvent();
     } catch {
       this.emit("error", new Error("Failed to initialize ENet server"));
     }
   }
 
-  private startWeb() {
+  private _startWeb() {
     if (!this.config.https) return;
     if (this.config.https.enable)
       WebServer(this.config.https.ip, this.config.https.port, this.config.https.type2);
   }
 
-  private handleEvent() {
+  private _handleEvent() {
+    // Initialize plugins
+    if (this.config.plugins.length) this.config.plugins.forEach((v) => v.init(this));
+
+    this.on("connect", (netID) => {
+      this.cache.players.set(netID, netID);
+      if (this.config.plugins.length) this.config.plugins.forEach((v) => v.onConnect(netID));
+    });
+
+    this.on("disconnect", (netID) => {
+      this.cache.players.delete(netID);
+      if (this.config.plugins.length) this.config.plugins.forEach((v) => v.onDisconnect(netID));
+    });
+
     this.on("raw", (netID, data) => {
+      if (this.config.plugins.length) this.config.plugins.forEach((v) => v.onRaw(netID, data));
       const type = data.readInt32LE();
       const peer = new Peer(this, netID);
 

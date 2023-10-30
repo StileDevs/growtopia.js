@@ -1,3 +1,5 @@
+import type { GrowApi } from "../src/structures/GrowApi";
+
 export interface ClientType {
   ip: string;
   port: number;
@@ -19,6 +21,9 @@ export interface ClientType {
 }
 
 export interface ClientOptions {
+  /** Third Party Plugins */
+  plugins?: GrowApi[];
+
   /** Built-in https web server */
   https?: {
     ip?: string;
@@ -34,4 +39,8 @@ export interface ClientOptions {
       asClient?: boolean;
     };
   };
+}
+
+export interface Caching {
+  players?: Map<number, number>;
 }

@@ -1,4 +1,4 @@
-const { Client, TextPacket, Peer } = require("../dist/index");
+const { Client, TextPacket, Peer } = require("../../dist/index");
 
 const client = new Client({
   enet: {

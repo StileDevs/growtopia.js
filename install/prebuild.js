@@ -2,14 +2,6 @@ const { exec } = require("child_process");
 
 const plat = [
   {
-    platform: "darwin",
-    arch: "x64"
-  },
-  {
-    platform: "linux",
-    arch: "x64"
-  },
-  {
     platform: "win32",
     arch: "ia32"
   },
