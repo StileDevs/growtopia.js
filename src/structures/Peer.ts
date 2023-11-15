@@ -4,7 +4,7 @@ import { Variant } from "../packets/Variant";
 import { Client } from "./Client";
 
 class Peer<T> {
-  public data: T;
+  public data?: T;
 
   constructor(private client: Client, netID: number) {
     (this.data as any) = { netID };

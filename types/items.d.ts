@@ -4,6 +4,7 @@ export interface StringOptions {
 }
 
 export interface ItemDefinition {
+  [key: string]: string;
   id?: number;
   flags?: number;
   flagsCategory?: number;

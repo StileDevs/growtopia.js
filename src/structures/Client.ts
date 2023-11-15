@@ -17,26 +17,26 @@ class Client extends EventEmitter {
     super();
 
     this.config = {
-      plugins: options.plugins ?? [],
+      plugins: options?.plugins ?? [],
       https: {
-        ip: options.https?.ip ?? "127.0.0.1",
-        port: options.https?.port ?? 17091,
-        enable: options.https?.enable ?? true,
-        type2: options.https?.type2 ?? false
+        ip: options?.https?.ip ?? "127.0.0.1",
+        port: options?.https?.port ?? 17091,
+        enable: options?.https?.enable ?? true,
+        type2: options?.https?.type2 ?? false
       },
       enet: {
-        ip: options.enet?.ip ?? "127.0.0.1",
-        port: options.enet?.port ?? 17091,
-        maxPeers: options.enet?.maxPeers ?? 1024,
+        ip: options?.enet?.ip ?? "127.0.0.1",
+        port: options?.enet?.port ?? 17091,
+        maxPeers: options?.enet?.maxPeers ?? 1024,
         useNewPacket: {
-          asClient: options.enet?.useNewPacket?.asClient ?? false
+          asClient: options?.enet?.useNewPacket?.asClient ?? false
         }
       }
     };
 
     this.config.plugins;
 
-    this._client = new Native(this.config.enet.ip, this.config.enet.port) as ClientType;
+    this._client = new Native(this.config.enet?.ip, this.config.enet?.port) as ClientType;
 
     this.cache = {
       players: new Map<number, number>()
@@ -73,7 +73,7 @@ class Client extends EventEmitter {
 
   public listen() {
     try {
-      this._client.create(this.config.enet.maxPeers, this.config.enet.useNewPacket.asClient);
+      this._client.create(this.config?.enet?.maxPeers!, this.config?.enet?.useNewPacket?.asClient!);
 
       this.emitter(this.emit.bind(this));
 
@@ -96,25 +96,25 @@ class Client extends EventEmitter {
   private _startWeb() {
     if (!this.config.https) return;
     if (this.config.https.enable)
-      WebServer(this.config.https.ip, this.config.https.port, this.config.https.type2);
+      WebServer(this.config?.https?.ip!, this.config?.https?.port!, this.config.https.type2);
   }
 
   private _handleEvent() {
     // Initialize plugins
-    if (this.config.plugins.length) this.config.plugins.forEach((v) => v.init(this));
+    if (this.config?.plugins?.length) this.config.plugins.forEach((v) => v.init(this));
 
     this.on("connect", (netID) => {
-      this.cache.players.set(netID, netID);
-      if (this.config.plugins.length) this.config.plugins.forEach((v) => v.onConnect(netID));
+      this.cache.players?.set(netID, netID);
+      if (this.config.plugins?.length) this.config.plugins.forEach((v) => v.onConnect(netID));
     });
 
     this.on("disconnect", (netID) => {
-      this.cache.players.delete(netID);
-      if (this.config.plugins.length) this.config.plugins.forEach((v) => v.onDisconnect(netID));
+      this.cache.players?.delete(netID);
+      if (this.config.plugins?.length) this.config.plugins.forEach((v) => v.onDisconnect(netID));
     });
 
     this.on("raw", (netID, data) => {
-      if (this.config.plugins.length) this.config.plugins.forEach((v) => v.onRaw(netID, data));
+      if (this.config.plugins?.length) this.config.plugins.forEach((v) => v.onRaw(netID, data));
       const type = data.readInt32LE();
       const peer = new Peer(this, netID);
 

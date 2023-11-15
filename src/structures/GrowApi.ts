@@ -2,7 +2,7 @@ import { Caching } from "../../types";
 import { Client } from "./Client";
 
 class GrowApi {
-  public client: Client;
+  public client?: Client;
 
   constructor() {}
 
