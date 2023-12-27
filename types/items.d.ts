@@ -56,6 +56,7 @@ export interface ItemDefinition {
   bodyPart?: Buffer;
   flags5?: number;
   extraTexture?: string;
+  itemRenderer?: string;
 }
 
 export interface ItemsDatMeta {

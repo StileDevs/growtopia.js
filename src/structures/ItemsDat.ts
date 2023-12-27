@@ -374,6 +374,10 @@ class ItemsDat {
             this.mempos += 25;
             item.extraTexture = await this.readString({ id: item.id });
           }
+
+          if (meta.version! >= 16) {
+            item.itemRenderer = await this.readString({ id: item.id });
+          }
         }
 
         meta.items.push(item);
