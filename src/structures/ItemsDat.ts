@@ -245,6 +245,10 @@ class ItemsDat {
             this.mempos += 25;
             await this.writeString(item.extraTexture || "", item.id!);
           }
+
+          if (meta.version! >= 16) {
+            await this.writeString(item.itemRenderer || "", item.id!);
+          }
         }
       }
 
