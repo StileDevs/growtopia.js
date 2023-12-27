@@ -35,7 +35,7 @@ class ItemsDat {
    * @param items An array of items
    */
   private getWriteSize(items: ItemDefinition[]) {
-    let size = 194 * items.length;
+    let size = 196 * items.length;
     // get sizes for the string
     for (const item of items) {
       const keys = Object.keys(item);

@@ -11,4 +11,7 @@ const item = new ItemsDat(file);
   decoded.items.forEach((i) => {
     i.itemRenderer.length ? console.log(i) : undefined;
   });
+
+  const encoded = await item.encode(decoded);
+  console.log({ encoded });
 })();
