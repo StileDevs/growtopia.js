@@ -3,7 +3,7 @@ import { Caching, ClientOptions, ClientType } from "../../types/client";
 import { PacketTypes } from "../util/Constants";
 import { parseText } from "../util/Utils";
 import { Peer } from "./Peer";
-import { ActionEvent, LoginInfo } from "../../types";
+import { ActionEvent, LoginInfo, PeerData } from "../../types";
 import { TankPacket } from "../packets/TankPacket";
 import { WebServer } from "./WebServer";
 const Native = require("../../build/Release/gtjs.node").Client;
@@ -45,9 +45,18 @@ class Client extends EventEmitter {
 
   public on(event: "connect", listener: (netID: number) => void): this;
   public on(event: "raw", listener: (netID: number, data: Buffer) => void): this;
-  public on<T>(event: "action", listener: (peer: Peer<T>, data: ActionEvent) => void): this;
-  public on<T>(event: "tank", listener: (peer: Peer<T>, data: TankPacket) => void): this;
-  public on<T>(event: "text", listener: (peer: Peer<T>, data: LoginInfo) => void): this;
+  public on<T extends PeerData>(
+    event: "action",
+    listener: (peer: Peer<T>, data: ActionEvent) => void
+  ): this;
+  public on<T extends PeerData>(
+    event: "tank",
+    listener: (peer: Peer<T>, data: TankPacket) => void
+  ): this;
+  public on<T extends PeerData>(
+    event: "text",
+    listener: (peer: Peer<T>, data: LoginInfo) => void
+  ): this;
   public on(event: "ready", listener: () => void): this;
   public on(event: "error", listener: (error: Error, data?: Buffer) => void): this;
   public on(event: "disconnect", listener: (netID: number) => void): this;
