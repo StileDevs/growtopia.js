@@ -91,8 +91,10 @@ export enum TileFlags {
 }
 
 export enum TileOptionsFlags {
-  MUSIC_BLOCKS_DISABLED = 0x10,
-  MUSIC_BLOCKS_INVIS = 0x20
+  MUSIC_BLOCKS_DISABLED = 0x0010,
+  MUSIC_BLOCKS_INVIS = 0x0020,
+  LOCK_ALLOW_BUILD_ONLY = 0x0040,
+  LOCK_ENABLE_RAINBOW = 0x0080,
 }
 
 export enum TilePropertiesFlags {
