@@ -1,14 +1,14 @@
-import { ClientType } from "../../types";
+import { ClientType, PeerData } from "../../types";
 import { Sendable } from "../../types/packets";
 import { Variant } from "../packets/Variant";
 import { Client } from "./Client";
 
-class Peer<T> {
-  public data?: T;
+class Peer<T extends PeerData> {
+  public data: T;
 
   constructor(private client: Client, netID: number) {
-    (this.data as any) = { netID };
-    // this.netID = netID;
+    this.data = {} as T;
+    this.data.netID = netID;
 
     this.client = client;
   }
@@ -17,14 +17,14 @@ class Peer<T> {
    * Get ENetPeer Round Trip Time (RTT).
    */
   public get ping() {
-    return this.client._client.getPeerRTT((this.data as any).netID);
+    return this.client._client.getPeerRTT(this.data.netID);
   }
 
   /**
    * Get [ENetPeerState](http://enet.bespin.org/enet_8h.html#a058bc368c507eb86cb47f3946f38d558).
    */
   public get state() {
-    return this.client._client.getPeerState((this.data as any).netID);
+    return this.client._client.getPeerState(this.data.netID);
   }
 
   /**
@@ -32,7 +32,7 @@ class Peer<T> {
    * @param data An argument of packets that contains the `parse()` function or just an array of Buffers.
    */
   public send(...data: Sendable[]) {
-    Peer.send(this.client._client, (this.data as any).netID, ...data);
+    Peer.send(this.client._client, this.data.netID, ...data);
   }
 
   /**
@@ -72,15 +72,15 @@ class Peer<T> {
   public disconnect(type: "now" | "later" | "normal" = "later") {
     switch (type) {
       case "normal": {
-        this.client._client.disconnect((this.data as any).netID);
+        this.client._client.disconnect(this.data.netID);
         break;
       }
       case "later": {
-        this.client._client.disconnectLater((this.data as any).netID);
+        this.client._client.disconnectLater(this.data.netID);
         break;
       }
       case "now": {
-        this.client._client.disconnectNow((this.data as any).netID);
+        this.client._client.disconnectNow(this.data.netID);
         break;
       }
     }

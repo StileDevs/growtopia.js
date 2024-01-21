@@ -1,6 +1,6 @@
 {
   "name": "growtopia.js",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "description": "A package to create a growtopia private servers.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
