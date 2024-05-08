@@ -249,6 +249,16 @@ class ItemsDat {
           if (meta.version! >= 16) {
             await this.writeString(item.itemRenderer || "", item.id!);
           }
+
+          if (meta.version! >= 17) {
+            this.data.writeInt32LE(item.extraFlags1!, this.mempos);
+            this.mempos += 4;
+          }
+
+          if (meta.version! >= 18) {
+            this.data.writeInt32LE(item.extraHash1!, this.mempos);
+            this.mempos += 4;
+          }
         }
       }
 
@@ -381,6 +391,16 @@ class ItemsDat {
 
           if (meta.version! >= 16) {
             item.itemRenderer = await this.readString({ id: item.id });
+          }
+
+          if (meta.version! >= 17) {
+            item.extraFlags1 = this.data?.readInt32LE(this.mempos);
+            this.mempos += 4;
+          }
+
+          if (meta.version! >= 18) {
+            item.extraHash1 = this.data?.readInt32LE(this.mempos);
+            this.mempos += 4;
           }
         }
 

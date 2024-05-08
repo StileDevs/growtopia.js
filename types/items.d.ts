@@ -57,6 +57,8 @@ export interface ItemDefinition {
   flags5?: number;
   extraTexture?: string;
   itemRenderer?: string;
+  extraFlags1?: number; // NOTE: not sure what this does
+  extraHash1?: number; // NOTE: not sure what this does
 }
 
 export interface ItemsDatMeta {
