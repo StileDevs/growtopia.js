@@ -46,6 +46,5 @@
   "devDependencies": {
     "rimraf": "^5.0.1",
     "typedoc": "^0.24.7"
-  },
-  "packageManager": "pnpm@9.1.1+sha256.9551e803dcb7a1839fdf5416153a844060c7bce013218ce823410532504ac10b"
+  }
 }
