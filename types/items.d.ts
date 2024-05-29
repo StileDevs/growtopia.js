@@ -10,8 +10,8 @@ export interface ItemDefinition {
   flagsCategory?: number;
   type?: number;
   materialType?: number;
-  name?: string;
-  texture?: string;
+  name?: ExtendString;
+  texture?: ExtendString;
   textureHash?: number;
   visualEffectType?: number;
   flags2?: number;
@@ -27,13 +27,13 @@ export interface ItemDefinition {
   growTime?: number;
   rarity?: number;
   maxAmount?: number;
-  extraFile?: string;
+  extraFile?: ExtendString;
   extraFileHash?: number;
   audioVolume?: number;
-  petName?: string;
-  petPrefix?: string;
-  petSuffix?: string;
-  petAbility?: string;
+  petName?: ExtendString;
+  petPrefix?: ExtendString;
+  petSuffix?: ExtendString;
+  petAbility?: ExtendString;
   seedBase?: number;
   seedOverlay?: number;
   treeBase?: number;
@@ -42,10 +42,10 @@ export interface ItemDefinition {
   seedOverlayColor?: number;
   isMultiFace?: number;
   isRayman?: number;
-  extraOptions?: string;
-  texture2?: string;
-  extraOptions2?: string;
-  punchOptions?: string;
+  extraOptions?: ExtendString;
+  texture2?: ExtendString;
+  extraOptions2?: ExtendString;
+  punchOptions?: ExtendString;
 
   extraBytes?: Buffer;
 
@@ -55,10 +55,17 @@ export interface ItemDefinition {
   flags4?: number;
   bodyPart?: Buffer;
   flags5?: number;
-  extraTexture?: string;
-  itemRenderer?: string;
+  extraTexture?: ExtendString;
+  itemRenderer?: ExtendString;
+  unknownInt1?: number; // NOTE: not sure what this does
+  unknownBytes1?: Buffer;
   extraFlags1?: number; // NOTE: not sure what this does
   extraHash1?: number; // NOTE: not sure what this does
+}
+
+export interface ExtendString {
+  value: string;
+  raw: Buffer;
 }
 
 export interface ItemsDatMeta {
