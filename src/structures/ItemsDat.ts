@@ -244,69 +244,69 @@ class ItemsDat {
     this.mempos = 0;
   }
 
-  public readU8() {
+  private readU8() {
     const val = this.data.readUInt8(this.mempos);
     this.mempos += 1;
     return val;
   }
-  public readU16() {
+  private readU16() {
     const val = this.data.readUInt16LE(this.mempos);
     this.mempos += 2;
     return val;
   }
-  public readU32() {
+  private readU32() {
     const val = this.data.readUInt32LE(this.mempos);
     this.mempos += 4;
     return val;
   }
-  public writeU8(value: number) {
+  private writeU8(value: number) {
     const val = this.data.writeUInt8(value, this.mempos);
     this.mempos += 1;
     return val;
   }
-  public writeU16(value: number) {
+  private writeU16(value: number) {
     const val = this.data.writeUInt16LE(value, this.mempos);
     this.mempos += 2;
     return val;
   }
-  public writeU32(value: number) {
+  private writeU32(value: number) {
     const val = this.data.writeUInt32LE(value, this.mempos);
     this.mempos += 4;
     return val;
   }
 
-  public readI8() {
+  private readI8() {
     const val = this.data.readInt8(this.mempos);
     this.mempos += 1;
     return val;
   }
-  public readI16() {
+  private readI16() {
     const val = this.data.readInt16LE(this.mempos);
     this.mempos += 2;
     return val;
   }
-  public readI32() {
+  private readI32() {
     const val = this.data.readInt32LE(this.mempos);
     this.mempos += 4;
     return val;
   }
-  public writeI8(value: number) {
+  private writeI8(value: number) {
     const val = this.data.writeInt8(value, this.mempos);
     this.mempos += 1;
     return val;
   }
-  public writeI16(value: number) {
+  private writeI16(value: number) {
     const val = this.data.writeInt16LE(value, this.mempos);
     this.mempos += 2;
     return val;
   }
-  public writeI32(value: number) {
+  private writeI32(value: number) {
     const val = this.data.writeInt32LE(value, this.mempos);
     this.mempos += 4;
     return val;
   }
 
-  public async readString(
+  private async readString(
     opts: StringOptions = {
       encoded: false
     }
@@ -338,7 +338,7 @@ class ItemsDat {
     }
   }
 
-  public writeString(str: ExtendString, id: number, encoded: boolean = false): Promise<undefined> {
+  private writeString(str: ExtendString, id: number, encoded: boolean = false): Promise<undefined> {
     return new Promise((resolve) => {
       // write the str length first
 
