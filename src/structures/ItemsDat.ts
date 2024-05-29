@@ -1,5 +1,4 @@
 import { ExtendString, ItemDefinition, ItemsDatMeta, StringOptions } from "../../types";
-import { ExtendBuffer } from "./ExtendBuffer";
 
 class ItemsDat {
   private mempos = 0;
