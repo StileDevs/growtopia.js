@@ -3,3 +3,4 @@ test/
 lib/build/**
 build/**
 docs/
+pnpm-lock.yaml
