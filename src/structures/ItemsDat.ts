@@ -27,7 +27,7 @@ class ItemsDat {
   };
   constructor(public data: Buffer) {}
 
-  public getWriteSize(items: ItemDefinition[]) {
+  private getWriteSize(items: ItemDefinition[]) {
     let size = 83 * items.length;
     // get sizes for the string
     for (const item of items) {
