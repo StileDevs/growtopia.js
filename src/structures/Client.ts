@@ -1,12 +1,13 @@
 import EventEmitter from "eventemitter3";
-import { Caching, ClientOptions, ClientType } from "../../types/client";
-import { PacketTypes } from "../util/Constants";
-import { parseText } from "../util/Utils";
-import { Peer } from "./Peer";
-import { ActionEvent, LoginInfo, PeerData } from "../../types";
-import { TankPacket } from "../packets/TankPacket";
-import { WebServer } from "./WebServer";
-const Native = require("../../build/Release/gtjs.node").Client;
+import type { Caching, ClientOptions, ClientType } from "../../types/client";
+import Constants from "../util/Constants.js";
+import Utils from "../util/Utils.js";
+import { Peer } from "./Peer.js";
+import type { ActionEvent, LoginInfo, PeerData } from "../../types";
+import { TankPacket } from "../packets/TankPacket.js";
+import { WebServer } from "./WebServer.js";
+import { createRequire } from "node:module";
+const Native = createRequire(import.meta.url)("../../build/Release/gtjs.node").Client;
 
 class Client extends EventEmitter {
   public _client: ClientType;
@@ -127,16 +128,18 @@ class Client extends EventEmitter {
       const type = data.readInt32LE();
       const peer = new Peer(this, netID);
 
+      const PacketTypes = Constants.PacketTypes;
+
       switch (type) {
         case PacketTypes.STR: {
-          const parsed = parseText(data);
+          const parsed = Utils.parseText(data);
 
           this.emit("text", peer, parsed);
           break;
         }
 
         case PacketTypes.ACTION: {
-          const parsed = parseText(data);
+          const parsed = Utils.parseText(data);
           this.emit("action", peer, parsed);
           break;
         }

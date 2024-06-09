@@ -1,12 +1,12 @@
-export type * from "../types/index";
+export type * from "../types/index.d";
 
-export * from "./structures/Client";
-export * from "./structures/Peer";
-export * from "./structures/ItemsDat";
-export * from "./structures/GrowApi";
-export * from "./util/Constants";
-export * from "./util/Utils";
+export * from "./structures/Client.js";
+export * from "./structures/Peer.js";
+export * from "./structures/ItemsDat.js";
+export * from "./structures/GrowApi.js";
+export * from "./util/Constants.js";
+export * from "./util/Utils.js";
 
-export * from "./packets/TankPacket";
-export * from "./packets/TextPacket";
-export * from "./packets/Variant";
+export * from "./packets/TankPacket.js";
+export * from "./packets/TextPacket.js";
+export * from "./packets/Variant.js";

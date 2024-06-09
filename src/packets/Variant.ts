@@ -1,8 +1,8 @@
-import { TankPacket } from "./TankPacket";
+import { TankPacket } from "./TankPacket.js";
 
 // Types
-import { VariantArg, VariantArray, VariantOptions } from "../../types/packets";
-import { VariantTypes } from "../util/Constants";
+import type { VariantArg, VariantArray, VariantOptions } from "../../types/packets";
+import Constants from "../util/Constants.js";
 
 /**
  * Represents the Variant class.
@@ -33,6 +33,7 @@ class Variant {
 
   public static toArray(data: Buffer): VariantArray[] {
     let arr: VariantArray[] = [];
+    const VariantTypes = Constants.VariantTypes;
 
     let pos = 60;
     const count = data.readUint8(60);
@@ -109,6 +110,8 @@ class Variant {
    * Parses the data of the Variant and returns a TankPacket from it.
    */
   public parse() {
+    const VariantTypes = Constants.VariantTypes;
+
     let buf = [this.args.length];
 
     this.args.forEach((arg) => {

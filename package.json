@@ -1,9 +1,10 @@
 {
   "name": "growtopia.js",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "A package to create a growtopia private servers.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "type": "module",
   "scripts": {
     "test": "npm run build && npm run build:ts",
     "dev": "rimraf dist && npm run build && npm run build:ts && node test/basic-example/index.js",

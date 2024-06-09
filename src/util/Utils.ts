@@ -1,7 +1,5 @@
-import { DataObject } from "../../types";
-
-export function parseText(chunk: Buffer) {
-  let data: DataObject = {};
+function parseText(chunk: Buffer) {
+  let data: Record<string, string | number> = {};
   chunk[chunk.length - 1] = 0;
 
   let str = chunk.toString("utf-8", 4);
@@ -22,3 +20,5 @@ export function parseText(chunk: Buffer) {
 
   return data;
 }
+
+export default { parseText };

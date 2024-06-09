@@ -1,7 +1,3 @@
-export interface DataObject {
-  [key: string]: string | number;
-}
-
 export interface PeerData {
   netID: number;
 }

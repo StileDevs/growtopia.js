@@ -1,5 +1,5 @@
-import { Caching } from "../../types";
-import { Client } from "./Client";
+import type { Caching } from "../../types";
+import { Client } from "./Client.js";
 
 class GrowApi {
   public client?: Client;

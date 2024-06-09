@@ -1,4 +1,4 @@
-import { ExtendString, ItemDefinition, ItemsDatMeta, StringOptions } from "../../types";
+import type { ExtendString, ItemDefinition, ItemsDatMeta, StringOptions } from "../../types";
 
 class ItemsDat {
   private mempos = 0;

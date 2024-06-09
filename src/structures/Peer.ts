@@ -1,7 +1,7 @@
-import { ClientType, PeerData } from "../../types";
-import { Sendable } from "../../types/packets";
-import { Variant } from "../packets/Variant";
-import { Client } from "./Client";
+import type { ClientType, PeerData } from "../../types";
+import type { Sendable } from "../../types/packets";
+import { Variant } from "../packets/Variant.js";
+import { Client } from "./Client.js";
 
 class Peer<T extends PeerData> {
   public data: T;

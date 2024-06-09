@@ -1,7 +1,7 @@
 /**
  * Types for each Argument.
  */
-export enum VariantTypes {
+enum VariantTypes {
   NONE,
   FLOAT_1,
   STRING,
@@ -14,7 +14,7 @@ export enum VariantTypes {
 /**
  * Growtopia Packet Types
  */
-export enum PacketTypes {
+enum PacketTypes {
   UNK,
   HELLO,
   STR,
@@ -29,7 +29,7 @@ export enum PacketTypes {
 /**
  * Growtopia Tank Packet Types
  */
-export enum TankTypes {
+enum TankTypes {
   STATE = 0,
   CALL_FUNCTION,
   UPDATE_STATUS,
@@ -72,7 +72,7 @@ export enum TankTypes {
   SEND_PLAYER_TRIBUTE_DATA
 }
 
-export enum TileFlags {
+enum TileFlags {
   FLAGS_TILEEXTRA = 0x0001,
   FLAGS_LOCKED = 0x0002,
   FLAGS_SEED = 0x0010,
@@ -90,14 +90,14 @@ export enum TileFlags {
   FLAGS_GLUE = 0x08000000
 }
 
-export enum TileOptionsFlags {
+enum TileOptionsFlags {
   MUSIC_BLOCKS_DISABLED = 0x0010,
   MUSIC_BLOCKS_INVIS = 0x0020,
   LOCK_ALLOW_BUILD_ONLY = 0x0040,
-  LOCK_ENABLE_RAINBOW = 0x0080,
+  LOCK_ENABLE_RAINBOW = 0x0080
 }
 
-export enum TilePropertiesFlags {
+enum TilePropertiesFlags {
   MULTI_FACING = 1 << 0,
   WRENCHABLE = 1 << 1,
   PERMANENT = 1 << 2,
@@ -108,7 +108,7 @@ export enum TilePropertiesFlags {
   WORLD_LOCK = 1 << 7
 }
 
-export enum TileCategoryFlags {
+enum TileCategoryFlags {
   BETA = 1 << 0,
   AUTO_PICKUP = 1 << 1,
   MOD = 1 << 2,
@@ -119,7 +119,7 @@ export enum TileCategoryFlags {
   UNTRADEABLE = 1 << 7
 }
 
-export enum TileActionTypes {
+enum TileActionTypes {
   FIST = 0,
   WRENCH = 1,
   DOOR = 2,
@@ -261,7 +261,7 @@ export enum TileActionTypes {
   FRIENDS_ENTRANCE = 142
 }
 
-export enum TileExtraTypes {
+enum TileExtraTypes {
   NONE,
   DOOR,
   SIGN,
@@ -321,3 +321,15 @@ export enum TileExtraTypes {
   KRANKEN_GALACTIC = 0x50,
   WEATHER_INFINITY = 0x4d
 }
+
+export default {
+  VariantTypes,
+  PacketTypes,
+  TankTypes,
+  TileActionTypes,
+  TileCategoryFlags,
+  TileExtraTypes,
+  TileFlags,
+  TileOptionsFlags,
+  TilePropertiesFlags
+};
