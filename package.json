@@ -13,7 +13,7 @@
     "build": "node-gyp rebuild",
     "build:ts": "tsc",
     "package": "node-pre-gyp package",
-    "install": "(node-pre-gyp install && npm run build:ts) || (npm run build && npm run build:ts)"
+    "install": "node-pre-gyp install || npm run build"
   },
   "homepage": "https://github.com/JadlionHD/growtopia.js#readme",
   "bugs": {
