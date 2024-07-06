@@ -12,11 +12,9 @@ export interface ClientType {
   disconnectLater: (peerID: number) => void;
   disconnectNow: (peerID: number) => void;
   toggleNewPacket: () => void;
-  getPeerRTT: (peerID: number) => number;
   /**
    * Return [ENetPeerState](http://enet.bespin.org/enet_8h.html#a058bc368c507eb86cb47f3946f38d558) enum value
    */
-  getPeerState: (peerID: number) => number;
   connect: (ipAddress: string, port: number, peerID: number) => boolean;
 }
 

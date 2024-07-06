@@ -17,6 +17,11 @@ client.on("error", (err) => {
 });
 
 client.on("connect", (netID) => {
+  const enetPeer = client._client.getPeer(netID);
+
+  console.log({ ping: enetPeer.getRTT() });
+  console.log(enetPeer.getAddress());
+
   console.log(`Connected netID ${netID}`);
   const peer = new Peer(client, netID);
   peer.send(TextPacket.from(0x1));
@@ -29,7 +34,6 @@ client.on("disconnect", (netID) => {
 client.on("raw", (netID, data) => {
   const peer = new Peer(client, netID);
   console.log("raw", data);
-  console.log(peer.ping, peer.state);
 });
 
 client.on("action", (peer, data) => {

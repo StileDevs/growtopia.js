@@ -5,6 +5,7 @@
       "sources": [
         "lib/main.cc",
         "lib/client.cc",
+        "lib/client_peer.cc",
         "<!@(node -p \"require('fs').readdirSync('./lib/include').map(file=>'lib/include/'+file).join(' ')\")",
         "<!@(node -p \"require('fs').readdirSync('./lib/src').map(file=>'lib/src/'+file).join(' ')\")"
       ],

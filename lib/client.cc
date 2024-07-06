@@ -1,4 +1,5 @@
 #include <client.h>
+#include <client_peer.h>
 
 Napi::FunctionReference Client::constructor;
 
@@ -218,22 +219,26 @@ Napi::Value Client::connect(NAPI_CB)
   return Napi::Boolean::New(env, true);
 }
 
-Napi::Value Client::getPeerState(NAPI_CB)
+Napi::Value Client::getPeer(NAPI_CB)
 {
   Napi::Env env = info.Env();
   uint32_t peerID = info[0].As<Napi::Number>().Uint32Value();
-  ENetPeer *peer = this->peers[peerID];
 
-  return Napi::Number::New(env, peer->state);
-}
+  if (this->peers.find(peerID) == this->peers.end())
+  {
+    Napi::TypeError::New(env, "Invalid peer ID").ThrowAsJavaScriptException();
+    return env.Null();
+  }
 
-Napi::Value Client::getPeerRTT(NAPI_CB)
-{
-  Napi::Env env = info.Env();
-  uint32_t peerID = info[0].As<Napi::Number>().Uint32Value();
-  ENetPeer *peer = this->peers[peerID];
+  ENetPeer *enetPeer = this->peers[peerID];
 
-  return Napi::Number::New(env, peer->roundTripTime);
+  Napi::Function peerConstructor = env.GetInstanceData<Napi::FunctionReference>()->Value();
+  Napi::Object peerObj = peerConstructor.New({});
+  ClientPeer *peer = Napi::ObjectWrap<ClientPeer>::Unwrap(peerObj);
+
+  peer->SetENetPeer(enetPeer);
+
+  return peerObj;
 }
 
 Napi::Object Client::Init(Napi::Env env, Napi::Object exports)
@@ -251,8 +256,7 @@ Napi::Object Client::Init(Napi::Env env, Napi::Object exports)
     InstanceMethod<&Client::disconnectLater>("disconnectLater"),
     InstanceMethod<&Client::disconnectNow>("disconnectNow"),
     InstanceMethod<&Client::toggleNewPacket>("toggleNewPacket"),
-    InstanceMethod<&Client::getPeerRTT>("getPeerRTT"),
-    InstanceMethod<&Client::getPeerState>("getPeerState"),
+    InstanceMethod<&Client::getPeer>("getPeer"),
     InstanceMethod<&Client::connect>("connect")
   });
   // clang-format on

@@ -6,8 +6,15 @@ import { Peer } from "./Peer.js";
 import type { ActionEvent, LoginInfo, PeerData } from "../../types";
 import { TankPacket } from "../packets/TankPacket.js";
 import { WebServer } from "./WebServer.js";
-import { createRequire } from "node:module";
-const Native = createRequire(import.meta.url)("../../build/Release/gtjs.node").Client;
+import { dirname, join } from "path";
+import { fileURLToPath } from "url";
+
+// @ts-expect-error @types/node-gyp-build not existed
+import nodegyp from "node-gyp-build";
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+const Native = nodegyp(join(__dirname, "..", "..")).Client;
+console.log({ Native });
 
 class Client extends EventEmitter {
   public _client: ClientType;
@@ -34,8 +41,6 @@ class Client extends EventEmitter {
         }
       }
     };
-
-    this.config.plugins;
 
     this._client = new Native(this.config.enet?.ip, this.config.enet?.port) as ClientType;
 

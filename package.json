@@ -10,7 +10,8 @@
     "dev": "rimraf dist && npm run build && npm run build:ts && node test/basic-example/index.js",
     "dev:nonative": "rimraf dist && npm run build:ts",
     "docs:gen": "rimraf docs && typedoc",
-    "build": "prebuildify --napi",
+    "build:prebuild": "prebuildify --napi",
+    "build": "node-gyp-build",
     "build:ts": "tsc",
     "install": "node-gyp-build"
   },
