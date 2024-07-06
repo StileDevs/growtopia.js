@@ -25,9 +25,13 @@ npm i growtopia.js
 ## Example
 
 ```js
-const { Client, TextPacket, Peer } = require("growtopia.js");
+import { Client, TextPacket, Peer } from "../../dist/index.js";
 
-const client = new Client();
+const client = new Client({
+  enet: {
+    ip: "0.0.0.0"
+  }
+});
 
 client.on("ready", () => {
   console.log(
@@ -50,7 +54,9 @@ client.on("disconnect", (netID) => {
 });
 
 client.on("raw", (netID, data) => {
+  const peer = new Peer(client, netID);
   console.log("raw", data);
+  console.log(peer.ping, peer.state);
 });
 
 client.on("action", (peer, data) => {
@@ -58,16 +64,6 @@ client.on("action", (peer, data) => {
   if (data.action === "quit") {
     peer.disconnect();
   }
-});
-
-client.on("tank", (peer, tank) => {
-  console.log(`Peer (${peer.data.netID}) tank`, { tank });
-});
-
-client.on("text", (peer, data) => {
-  console.log(peer.ping);
-
-  console.log(`Peer (${peer.data.netID}) text`, { data });
 });
 
 client.listen();

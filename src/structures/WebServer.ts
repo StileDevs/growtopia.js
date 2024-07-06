@@ -2,14 +2,14 @@ import express from "express";
 import { readFileSync } from "fs";
 import http from "http";
 import https from "https";
-import path from "path";
+import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const options = {
-  key: readFileSync(path.join(__dirname, "..", "..", "misc", "ssl", "server.key")),
-  cert: readFileSync(path.join(__dirname, "..", "..", "misc", "ssl", "server.crt"))
+  key: readFileSync(join(__dirname, "..", "..", "misc", "ssl", "server.key")),
+  cert: readFileSync(join(__dirname, "..", "..", "misc", "ssl", "server.crt"))
 };
 
 export function WebServer(ip: string, port: number, type2 = false) {

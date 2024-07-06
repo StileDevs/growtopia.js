@@ -1,4 +1,4 @@
-const { Client, TextPacket, Peer } = require("../../dist/index");
+import { Client, TextPacket, Peer } from "../../dist/index.js";
 
 const client = new Client({
   enet: {
