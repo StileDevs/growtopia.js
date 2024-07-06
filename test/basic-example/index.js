@@ -2,7 +2,11 @@ import { Client, TextPacket, Peer } from "../../dist/index.js";
 
 const client = new Client({
   enet: {
-    ip: "0.0.0.0"
+    ip: "0.0.0.0",
+    port: 17091
+  },
+  https: {
+    port: 8080 // Testing purposes (Must be 80 if production)
   }
 });
 
