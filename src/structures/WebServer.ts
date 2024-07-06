@@ -4,6 +4,7 @@ import http from "http";
 import https from "https";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
+import type { HTTPSServerOptions } from "../../types";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -12,7 +13,7 @@ const options = {
   cert: readFileSync(join(__dirname, "..", "..", "misc", "ssl", "server.crt"))
 };
 
-export function WebServer(ip: string, port: number, type2 = false) {
+export function WebServer(data: HTTPSServerOptions) {
   const app = express();
   let done = false;
 
@@ -21,14 +22,14 @@ export function WebServer(ip: string, port: number, type2 = false) {
 
   app.use("/growtopia/server_data.php", (req, res) => {
     res.send(
-      `server|${ip}\nport|${port}\ntype|1\n${
-        type2 ? "type2|1" : ""
+      `server|${data.ip}\nport|${data.enetPort}\ntype|1\n${
+        data.type2 ? "type2|1" : ""
       }\n#maint|Server is Maintenance\nmeta|growtopiajs\nRTENDMARKERBS1001`
     );
   });
 
-  httpServer.listen(80);
-  httpsServer.listen(443);
+  httpServer.listen(data.httpPort);
+  httpsServer.listen(data.httpsPort);
   httpsServer.on("listening", function () {
     done = true;
   });

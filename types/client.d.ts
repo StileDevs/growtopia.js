@@ -23,19 +23,25 @@ export interface ClientOptions {
   plugins?: GrowApi[];
 
   /** Built-in https web server */
-  https?: {
-    ip?: string;
-    port?: number;
-    enable?: boolean;
-    type2?: boolean;
-  };
-  enet?: {
-    ip?: string;
-    port?: number;
-    maxPeers?: number;
-    useNewPacket?: {
-      asClient?: boolean;
-    };
+  https?: HTTPSServerOptions;
+  enet?: ENetServerOptions;
+}
+
+export interface HTTPSServerOptions {
+  ip?: string;
+  enetPort?: number;
+  httpPort?: number;
+  httpsPort?: number;
+  enable?: boolean;
+  type2?: boolean;
+}
+
+export interface ENetServerOptions {
+  ip?: string;
+  port?: number;
+  maxPeers?: number;
+  useNewPacket?: {
+    asClient?: boolean;
   };
 }
 

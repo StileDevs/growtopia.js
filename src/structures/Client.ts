@@ -28,7 +28,9 @@ class Client extends EventEmitter {
       plugins: options?.plugins ?? [],
       https: {
         ip: options?.https?.ip ?? "127.0.0.1",
-        port: options?.https?.port ?? 17091,
+        enetPort: options?.https?.enetPort ?? 17091,
+        httpPort: options?.https?.httpPort ?? 80,
+        httpsPort: options?.https?.httpsPort ?? 443,
         enable: options?.https?.enable ?? true,
         type2: options?.https?.type2 ?? false
       },
@@ -110,8 +112,7 @@ class Client extends EventEmitter {
 
   private _startWeb() {
     if (!this.config.https) return;
-    if (this.config.https.enable)
-      WebServer(this.config?.https?.ip!, this.config?.https?.port!, this.config.https.type2);
+    if (this.config.https.enable) WebServer(this.config.https);
   }
 
   private _handleEvent() {
