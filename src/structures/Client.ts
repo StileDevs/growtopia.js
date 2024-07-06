@@ -14,7 +14,6 @@ import nodegyp from "node-gyp-build";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const Native = nodegyp(join(__dirname, "..", "..")).Client;
-console.log({ Native });
 
 class Client extends EventEmitter {
   public _client: ClientType;
