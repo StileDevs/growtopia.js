@@ -6,7 +6,7 @@ const client = new Client({
     port: 17091
   },
   https: {
-    port: 8080 // Testing purposes (Must be 80 if production)
+    httpPort: 8080 // Testing purposes (Must be 80 if production)
   }
 });
 
