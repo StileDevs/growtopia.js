@@ -16,7 +16,7 @@ client.on("ready", () => {
     `ENet server: port ${client.config.enet.port} on ${client.config.enet.ip}\nHttps server: port ${client.config.https.httpsPort} on ${client.config.https.ip}`
   );
   // Success
-  process.exit(1);
+  process.exit(0);
 });
 
 client.on("error", (err) => {
