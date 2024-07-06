@@ -14,7 +14,7 @@ A fork of [GrowSockets](https://github.com/Pogtopia/GrowSockets) to create a gro
 
 ## Requirements
 
-- [Node.js v16+](https://nodejs.org/en) (No need to build from source)
+- [Node.js v18+](https://nodejs.org/en) (No need to build from source)
 
 ## Installation
 
