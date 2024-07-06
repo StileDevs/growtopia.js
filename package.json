@@ -6,7 +6,7 @@
   "types": "dist/index.d.ts",
   "type": "module",
   "scripts": {
-    "test": "npm run build && npm run build:ts",
+    "test": "npm run build:prebuild && npm run build:ts && node test/basic-example/index.js",
     "dev": "rimraf dist && npm run build && npm run build:ts && node test/basic-example/index.js",
     "dev:nonative": "rimraf dist && npm run build:ts",
     "docs:gen": "rimraf docs && typedoc",
