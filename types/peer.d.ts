@@ -8,7 +8,7 @@ export interface NativePeerMethod {
   getPacketsLost: () => number;
   getPacketsSent: () => number;
   getTotalWaitingData: () => number;
-  getAddress: () => NativeAddress;
+  getAddress: () => NativePeerAddress;
 }
 
 export interface NativePeerAddress {

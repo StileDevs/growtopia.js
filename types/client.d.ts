@@ -1,4 +1,5 @@
 import type { GrowApi } from "../src/structures/GrowApi";
+import { NativePeerMethod } from "./peer";
 
 export interface ClientType {
   ip: string;
@@ -16,6 +17,7 @@ export interface ClientType {
    * Return [ENetPeerState](http://enet.bespin.org/enet_8h.html#a058bc368c507eb86cb47f3946f38d558) enum value
    */
   connect: (ipAddress: string, port: number, peerID: number) => boolean;
+  getPeer: (peerID: number) => NativePeerMethod;
 }
 
 export interface ClientOptions {

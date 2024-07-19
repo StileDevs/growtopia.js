@@ -7,8 +7,10 @@ class Peer<T extends PeerData> {
   public data: T;
 
   constructor(private client: Client, netID: number) {
-    this.data = {} as T;
-    this.data.netID = netID;
+    this.data = {
+      netID,
+      enet: this.client._client.getPeer(netID)
+    } as T;
 
     this.client = client;
   }

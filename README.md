@@ -25,7 +25,7 @@ npm i growtopia.js
 ## Example
 
 ```js
-import { Client, TextPacket, Peer } from "../../dist/index.js";
+import { Client, TextPacket, Peer } from "growtopia.js";
 
 const client = new Client({
   enet: {
