@@ -13,7 +13,7 @@ export interface NativePeerMethod {
 
 export interface NativePeerAddress {
   address: string;
-  host: number;
+  port: number;
 }
 
 export interface PeerData {
