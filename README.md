@@ -1,4 +1,4 @@
-# Growtopia.js
+![GrowtopiaJS](/.github/images/banner.png)
 
 ![Github Version](https://img.shields.io/github/package-json/v/jadlionhd/growtopia.js?style=flat-square)
 ![NPM Version](https://img.shields.io/npm/v/growtopia.js?style=flat-square)
