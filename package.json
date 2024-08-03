@@ -1,6 +1,6 @@
 {
   "name": "growtopia.js",
-  "version": "1.5.4",
+  "version": "1.5.5",
   "description": "A package to create a growtopia private servers.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -34,6 +34,10 @@
     "host": "https://github.com/JadlionHD/growtopia.js/releases/download/",
     "remote_path": "v{version}"
   },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=7.0.0"
+  },
   "dependencies": {
     "@types/express": "^4.17.21",
     "@types/node": "^20.1.5",
@@ -47,6 +51,6 @@
   "devDependencies": {
     "prebuildify": "^6.0.1",
     "rimraf": "^5.0.1",
-    "typedoc": "^0.24.7"
+    "typedoc": "^0.26.5"
   }
 }

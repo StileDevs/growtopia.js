@@ -4,4 +4,5 @@ lib/build/**
 build/**
 docs/
 pnpm-lock.yaml
+typedoc.json
 src/*

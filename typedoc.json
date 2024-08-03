@@ -1,4 +1,7 @@
 {
   "entryPoints": ["./src/index.ts"],
-  "out": "docs"
+  "out": "docs",
+  "theme": "default",
+  "entryPointStrategy": "expand",
+  "readme": "./README.md"
 }
