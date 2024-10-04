@@ -6,3 +6,5 @@ docs/
 pnpm-lock.yaml
 typedoc.json
 src/*
+.vscode
+.github
