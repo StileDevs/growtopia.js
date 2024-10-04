@@ -1,11 +1,10 @@
 import EventEmitter from "eventemitter3";
-import type { Caching, ClientOptions, ClientType } from "../../types/client";
+import type { Caching, ClientOptions, ClientType } from "../../types";
 import Constants from "../util/Constants.js";
 import Utils from "../util/Utils.js";
 import { Peer } from "./Peer.js";
 import type { ActionEvent, LoginInfo, PeerData } from "../../types";
 import { TankPacket } from "../packets/TankPacket.js";
-import { WebServer } from "./WebServer.js";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 
@@ -13,6 +12,7 @@ import { fileURLToPath } from "url";
 import nodegyp from "node-gyp-build";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
+console.log(__dirname);
 const Native = nodegyp(join(__dirname, "..", "..")).Client;
 
 class Client extends EventEmitter {
@@ -24,15 +24,6 @@ class Client extends EventEmitter {
     super();
 
     this.config = {
-      plugins: options?.plugins ?? [],
-      https: {
-        ip: options?.https?.ip ?? "127.0.0.1",
-        enetPort: options?.https?.enetPort ?? 17091,
-        httpPort: options?.https?.httpPort ?? 80,
-        httpsPort: options?.https?.httpsPort ?? 443,
-        enable: options?.https?.enable ?? true,
-        type2: options?.https?.type2 ?? false
-      },
       enet: {
         ip: options?.enet?.ip ?? "127.0.0.1",
         port: options?.enet?.port ?? 17091,
@@ -101,7 +92,6 @@ class Client extends EventEmitter {
       };
 
       loop();
-      this._startWeb();
       this._handleEvent();
       this.emit("ready");
     } catch {
@@ -109,27 +99,16 @@ class Client extends EventEmitter {
     }
   }
 
-  private _startWeb() {
-    if (!this.config.https) return;
-    if (this.config.https.enable) WebServer(this.config.https);
-  }
-
   private _handleEvent() {
-    // Initialize plugins
-    if (this.config?.plugins?.length) this.config.plugins.forEach((v) => v.init(this));
-
     this.on("connect", (netID) => {
       this.cache.players?.set(netID, netID);
-      if (this.config.plugins?.length) this.config.plugins.forEach((v) => v.onConnect(netID));
     });
 
     this.on("disconnect", (netID) => {
       this.cache.players?.delete(netID);
-      if (this.config.plugins?.length) this.config.plugins.forEach((v) => v.onDisconnect(netID));
     });
 
     this.on("raw", (netID, data) => {
-      if (this.config.plugins?.length) this.config.plugins.forEach((v) => v.onRaw(netID, data));
       const type = data.readInt32LE();
       const peer = new Peer(this, netID);
 

@@ -1,4 +1,3 @@
-import type { GrowApi } from "../src/structures/GrowApi";
 import { NativePeerMethod } from "./peer";
 
 export interface ClientType {
@@ -21,21 +20,8 @@ export interface ClientType {
 }
 
 export interface ClientOptions {
-  /** Third Party Plugins */
-  plugins?: GrowApi[];
-
   /** Built-in https web server */
-  https?: HTTPSServerOptions;
   enet?: ENetServerOptions;
-}
-
-export interface HTTPSServerOptions {
-  ip?: string;
-  enetPort?: number;
-  httpPort?: number;
-  httpsPort?: number;
-  enable?: boolean;
-  type2?: boolean;
 }
 
 export interface ENetServerOptions {

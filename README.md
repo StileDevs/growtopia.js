@@ -9,8 +9,7 @@ A fork of [GrowSockets](https://github.com/Pogtopia/GrowSockets) to create a gro
 ## Features
 
 - Stable
-- Plugins system
-- Built-in ItemsDat tools & Web server
+- Built-in ItemsDat tools
 
 ## Requirements
 
@@ -34,9 +33,7 @@ const client = new Client({
 });
 
 client.on("ready", () => {
-  console.log(
-    `ENet server: port ${client.config.enet.port} on ${client.config.enet.ip}\nHttps server: port ${client.config.https.port} on ${client.config.https.ip}`
-  );
+  console.log(`ENet server: port ${client.config.enet.port} on ${client.config.enet.ip}`);
 });
 
 client.on("error", (err) => {
@@ -59,36 +56,8 @@ client.on("raw", (netID, data) => {
   console.log(peer.ping, peer.state);
 });
 
-client.on("action", (peer, data) => {
-  console.log(`Peer (${peer.data.netID}) action`, { data });
-  if (data.action === "quit") {
-    peer.disconnect();
-  }
-});
-
 client.listen();
 ```
-
-## Plugins
-
-> To create your own plugin, take a look [here](https://github.com/JadlionHD/growtopia.js/tree/main/test/module-system)
-
-A example adding plugin to your server:
-
-```js
-const client = new Client({
-  // Add a plugin here
-  plugins: [new IModule(), new WorldGen()]
-});
-```
-
-## Plugins list
-
-> Open a PR to add your plugin here
-
-| Name       | Link                                                                             | Description                 |
-| ---------- | -------------------------------------------------------------------------------- | --------------------------- |
-| HelloWorld | [Github](https://github.com/JadlionHD/growtopia.js/tree/main/test/module-system) | Test sending hello world :D |
 
 ## Building
 
