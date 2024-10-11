@@ -2,7 +2,7 @@ import type { ClientType, PeerData, Sendable } from "../../types";
 import { Variant } from "../packets/Variant.js";
 import { Client } from "./Client.js";
 
-class Peer<T extends PeerData> {
+export class Peer<T extends PeerData> {
   public data: T;
 
   constructor(private client: Client, netID: number) {
@@ -73,5 +73,3 @@ class Peer<T extends PeerData> {
     }
   }
 }
-
-export { Peer };

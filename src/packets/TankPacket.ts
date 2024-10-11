@@ -5,7 +5,7 @@ const TANK_HEADER_SIZE = 60;
 /**
  * Represent a TankPacket.
  */
-class TankPacket {
+export class TankPacket {
   /**
    * Creates a new instance of the TankPacket class.
    * @param data The tankpacket header and data.
@@ -83,5 +83,3 @@ class TankPacket {
     return buf;
   }
 }
-
-export { TankPacket };

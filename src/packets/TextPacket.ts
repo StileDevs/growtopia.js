@@ -1,7 +1,7 @@
 /**
  * TextPacket class to create text packets such as for actions or other uses.
  */
-class TextPacket {
+export class TextPacket {
   /**
    * Creates a new TextPacket class
    * @param type The type of the packet.
@@ -43,5 +43,3 @@ class TextPacket {
     return buffer;
   }
 }
-
-export { TextPacket };

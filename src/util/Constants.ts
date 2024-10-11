@@ -1,7 +1,7 @@
 /**
  * Types for each Argument.
  */
-enum VariantTypes {
+export enum VariantTypes {
   NONE,
   FLOAT_1,
   STRING,
@@ -14,7 +14,7 @@ enum VariantTypes {
 /**
  * Growtopia Packet Types
  */
-enum PacketTypes {
+export enum PacketTypes {
   UNK,
   HELLO,
   STR,
@@ -25,8 +25,3 @@ enum PacketTypes {
   CLIENT_LOG_REQ,
   CLIENT_LOG_RES
 }
-
-export default {
-  VariantTypes,
-  PacketTypes
-};

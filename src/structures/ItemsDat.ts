@@ -1,6 +1,6 @@
 import type { ExtendString, ItemDefinition, ItemsDatMeta, StringOptions } from "../../types";
 
-class ItemsDat {
+export class ItemsDat {
   private mempos = 0;
 
   private key: string = "PBG892FXX982ABC*";
@@ -362,5 +362,3 @@ class ItemsDat {
     });
   }
 }
-
-export { ItemsDat };

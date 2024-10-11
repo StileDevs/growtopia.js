@@ -1,4 +1,4 @@
-function parseText(chunk: Buffer) {
+export function parseText(chunk: Buffer) {
   let data: Record<string, string | number> = {};
   chunk[chunk.length - 1] = 0;
 
@@ -20,5 +20,3 @@ function parseText(chunk: Buffer) {
 
   return data;
 }
-
-export default { parseText };

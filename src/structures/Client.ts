@@ -1,7 +1,7 @@
 import EventEmitter from "eventemitter3";
 import type { Caching, ClientOptions, ClientType } from "../../types";
-import Constants from "../util/Constants.js";
-import Utils from "../util/Utils.js";
+import { PacketTypes } from "../util/Constants.js";
+import { parseText } from "../util/Utils.js";
 import { Peer } from "./Peer.js";
 import type { ActionEvent, LoginInfo, PeerData } from "../../types";
 import { TankPacket } from "../packets/TankPacket.js";
@@ -12,10 +12,9 @@ import { fileURLToPath } from "url";
 import nodegyp from "node-gyp-build";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-console.log(__dirname);
 const Native = nodegyp(join(__dirname, "..", "..")).Client;
 
-class Client extends EventEmitter {
+export class Client extends EventEmitter {
   public _client: ClientType;
   public config: ClientOptions;
   public cache: Caching;
@@ -112,18 +111,16 @@ class Client extends EventEmitter {
       const type = data.readInt32LE();
       const peer = new Peer(this, netID);
 
-      const PacketTypes = Constants.PacketTypes;
-
       switch (type) {
         case PacketTypes.STR: {
-          const parsed = Utils.parseText(data);
+          const parsed = parseText(data);
 
           this.emit("text", peer, parsed);
           break;
         }
 
         case PacketTypes.ACTION: {
-          const parsed = Utils.parseText(data);
+          const parsed = parseText(data);
           this.emit("action", peer, parsed);
           break;
         }
@@ -148,5 +145,3 @@ class Client extends EventEmitter {
     });
   }
 }
-
-export { Client };
