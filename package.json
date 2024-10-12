@@ -14,7 +14,6 @@
     "build": "node-gyp-build",
     "build:gyp": "node-gyp configure rebuild",
     "build:ts": "tsc",
-    "prepare": "rimraf dist && tsc && cp -r src/types dist/types",
     "install": "node-gyp-build"
   },
   "homepage": "https://github.com/JadlionHD/growtopia.js#readme",
