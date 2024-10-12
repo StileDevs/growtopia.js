@@ -1,6 +1,6 @@
-import { TankPacket } from "../src/packets/TankPacket";
-import { TextPacket } from "../src/packets/TextPacket";
-import { Variant } from "../src/packets/Variant";
+import { TankPacket } from "../packets/TankPacket";
+import { TextPacket } from "../packets/TextPacket";
+import { Variant } from "../packets/Variant";
 
 /**
  * Represents the data needed for the TankPacket.

@@ -1,7 +1,7 @@
 import { TankPacket } from "./TankPacket.js";
 
 // Types
-import type { VariantArg, VariantArray, VariantOptions } from "../../types/packets";
+import type { VariantArg, VariantArray, VariantOptions } from "../../types/packets.js";
 import { VariantTypes } from "../util/Constants.js";
 
 /**

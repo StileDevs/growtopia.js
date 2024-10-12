@@ -3,5 +3,13 @@
     "lib/include",
     "${env:LOCALAPPDATA}\\node-gyp\\Cache\\18.16.0\\include\\node",
     "${workspaceFolder}\\node_modules\\node-addon-api"
-  ]
+  ],
+  "files.associations": {
+    "*.ejs": "html",
+    "array": "cpp",
+    "string": "cpp",
+    "string_view": "cpp",
+    "span": "cpp"
+  },
+  "editor.tabSize": 2
 }

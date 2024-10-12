@@ -1,12 +1,12 @@
 {
   "name": "growtopia.js",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "description": "A package to create a growtopia private servers.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
   "scripts": {
-    "test": "npm run build:prebuild && npm run build:ts && node test/basic-example/index.js",
+    "test": "npm run build:prebuild && npm run build:ts && node test/basic.js",
     "dev": "rimraf dist && npm run build && npm run build:ts && node test/basic-example/index.js",
     "dev:nonative": "rimraf dist && npm run build:ts",
     "docs:gen": "rimraf docs && typedoc",
@@ -14,6 +14,7 @@
     "build": "node-gyp-build",
     "build:gyp": "node-gyp configure rebuild",
     "build:ts": "tsc",
+    "prepare": "rimraf dist && tsc && cp -r src/types dist/types",
     "install": "node-gyp-build"
   },
   "homepage": "https://github.com/JadlionHD/growtopia.js#readme",

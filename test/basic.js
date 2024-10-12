@@ -1,5 +1,4 @@
-import { Client, TextPacket, Peer } from "../../dist/index.js";
-
+import { Client, TextPacket, Peer, Tank } from "../dist/index";
 const client = new Client({
   enet: {
     ip: "0.0.0.0"
@@ -8,7 +7,6 @@ const client = new Client({
 
 client.on("ready", () => {
   console.log(`ENet server: port ${client.config.enet.port} on ${client.config.enet.ip}`);
-  process.exit(0); // Stop event loop when testing
 });
 
 client.on("error", (err) => {
