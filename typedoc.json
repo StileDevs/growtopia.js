@@ -1,5 +1,5 @@
 {
-  "entryPoints": ["./src/index.ts", "./types"],
+  "entryPoints": ["./src/index.ts"],
   "out": "docs",
   "theme": "default",
   "entryPointStrategy": "expand",
