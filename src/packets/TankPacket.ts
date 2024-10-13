@@ -1,4 +1,4 @@
-import type { Tank } from "../../types";
+import type { Tank } from "../types";
 
 const TANK_HEADER_SIZE = 60;
 

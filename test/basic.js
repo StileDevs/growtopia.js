@@ -1,4 +1,4 @@
-import { Client, TextPacket, Peer, Tank } from "../dist/index";
+import { Client, TextPacket, Peer } from "../dist/index.js";
 const client = new Client({
   enet: {
     ip: "0.0.0.0"
@@ -6,7 +6,8 @@ const client = new Client({
 });
 
 client.on("ready", () => {
-  console.log(`ENet server: port ${client.config.enet.port} on ${client.config.enet.ip}`);
+  console.log(`ENet server port ${client.config.enet?.port}`);
+  process.exit(0);
 });
 
 client.on("error", (err) => {
@@ -26,7 +27,6 @@ client.on("disconnect", (netID) => {
 client.on("raw", (netID, data) => {
   const peer = new Peer(client, netID);
   console.log("raw", data);
-  console.log(peer.ping, peer.state);
 });
 
 client.listen();

@@ -1,4 +1,4 @@
-import type { ClientType, PeerData, Sendable } from "../../types";
+import type { ClientType, PeerData, Sendable } from "../types";
 import { Variant } from "../packets/Variant.js";
 import { Client } from "./Client.js";
 

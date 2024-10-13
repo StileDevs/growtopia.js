@@ -2,9 +2,17 @@
   "name": "growtopia.js",
   "version": "1.6.2",
   "description": "A package to create a growtopia private servers.",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "bun": "./dist/index.js",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    }
+  },
   "scripts": {
     "test": "npm run build:prebuild && npm run build:ts && node test/basic.js",
     "dev": "rimraf dist && npm run build && npm run build:ts && node test/basic-example/index.js",
@@ -13,7 +21,7 @@
     "build:prebuild": "prebuildify --napi",
     "build": "node-gyp-build",
     "build:gyp": "node-gyp configure rebuild",
-    "build:ts": "tsc",
+    "build:ts": "rimraf dist && tsc && cp -r src/types dist/types",
     "install": "node-gyp-build"
   },
   "homepage": "https://github.com/JadlionHD/growtopia.js#readme",
@@ -42,16 +50,16 @@
     "npm": ">=7.0.0"
   },
   "dependencies": {
-    "@types/node": "^20.1.5",
     "eventemitter3": "^5.0.1",
     "node-addon-api": "^8.0.0",
     "node-gyp": "^10.1.0",
-    "node-gyp-build": "^4.8.1",
-    "typescript": "^5.0.4"
+    "node-gyp-build": "^4.8.1"
   },
   "devDependencies": {
+    "@types/node": "^22.7.5",
     "prebuildify": "^6.0.1",
     "rimraf": "^5.0.1",
-    "typedoc": "^0.26.5"
+    "typedoc": "^0.26.5",
+    "typescript": "^5.6.3"
   }
 }

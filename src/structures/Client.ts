@@ -1,9 +1,9 @@
 import EventEmitter from "eventemitter3";
-import type { Caching, ClientOptions, ClientType } from "../../types";
+import type { Caching, ClientOptions, ClientType } from "../types";
 import { PacketTypes } from "../util/Constants.js";
 import { parseText } from "../util/Utils.js";
 import { Peer } from "./Peer.js";
-import type { ActionEvent, LoginInfo, PeerData } from "../../types";
+import type { ActionEvent, LoginInfo, PeerData } from "../types";
 import { TankPacket } from "../packets/TankPacket.js";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
