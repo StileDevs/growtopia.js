@@ -1,5 +1,6 @@
 {
   "entryPoints": ["./src/index.ts"],
+  "cname": "gtjs.jad.li",
   "out": "docs",
   "theme": "default",
   "entryPointStrategy": "expand",
