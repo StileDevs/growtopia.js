@@ -58,9 +58,10 @@ export interface ItemDefinition {
   extraTexture?: ExtendString;
   itemRenderer?: ExtendString;
   unknownInt1?: number; // NOTE: not sure what this does
-  unknownBytes1?: Buffer;
+  unknownBytes1?: Buffer; // NOTE: not sure what this does
   extraFlags1?: number; // NOTE: not sure what this does
   extraHash1?: number; // NOTE: not sure what this does
+  unknownBytes2?: Buffer; // NOTE: not sure what this does
 }
 
 export interface ExtendString {

@@ -28,8 +28,9 @@ export class ItemsDat {
   constructor(public data: Buffer) {}
 
   private getWriteSize(items: ItemDefinition[]) {
+    // magic num came from counting numeric size
     let size = 83 * items.length;
-    // get sizes for the string
+
     for (const item of items) {
       const keys = Object.keys(item);
 
@@ -136,6 +137,8 @@ export class ItemsDat {
         if (this.meta.version >= 16) item.itemRenderer = await this.readString({ id: item.id });
         if (this.meta.version >= 17) item.extraFlags1 = this.readI32();
         if (this.meta.version >= 18) item.extraHash1 = this.readI32();
+        if (this.meta.version >= 19)
+          item.unknownBytes2 = this.data.subarray(this.mempos, (this.mempos += 9));
       }
       this.meta.items.push(item);
     }
@@ -239,6 +242,10 @@ export class ItemsDat {
         }
         if (this.meta.version! >= 17) this.writeI32(item.extraFlags1!);
         if (this.meta.version! >= 18) this.writeI32(item.extraHash1!);
+        if (this.meta.version! >= 19) {
+          if (Buffer.isBuffer(item.unknownBytes2))
+            for (const byte of item.unknownBytes2) this.writeU8(byte);
+        }
       }
     }
     this.mempos = 0;
