@@ -310,7 +310,7 @@ if (!nativeBinding) {
   throw new Error(`Failed to load native binding`)
 }
 
-const { sum, Client } = nativeBinding
+const { Host, sum } = nativeBinding
 
+module.exports.Host = Host
 module.exports.sum = sum
-module.exports.Client = Client
