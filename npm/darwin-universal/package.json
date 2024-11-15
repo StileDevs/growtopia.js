@@ -1,0 +1,15 @@
+{
+  "name": "growtopia-js-darwin-universal",
+  "version": "0.0.0",
+  "os": [
+    "darwin"
+  ],
+  "main": "growtopia-js.darwin-universal.node",
+  "files": [
+    "growtopia-js.darwin-universal.node"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">= 10"
+  }
+}

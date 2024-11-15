@@ -20,6 +20,6 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true
   },
-  "exclude": ["node_modules/**/*", "lib/**/*"],
-  "include": ["src/**/*", "src/types/**/*"]
+  "exclude": ["node_modules/**/*", "src/**/*"],
+  "include": ["lib/**/*", "types/**/*"]
 }
