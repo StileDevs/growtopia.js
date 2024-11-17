@@ -1,8 +1,7 @@
 use core::str;
-use napi::bindgen_prelude::Undefined;
-use napi::{CallContext, Env, JsFunction, Ref};
+use napi::{bindgen_prelude::*, Ref};
+use napi::{Env, JsFunction};
 use rusty_enet as enet;
-use std::env;
 use std::str::FromStr;
 use std::time::Duration;
 use std::{net::SocketAddr, net::UdpSocket};
@@ -10,13 +9,13 @@ use std::{net::SocketAddr, net::UdpSocket};
 #[napi(js_name = "Host")]
 pub struct Host {
   host: enet::Host<UdpSocket>,
-  emitter: Option<Ref<JsFunction>>,
+  emitter: Option<Ref<()>>,
 }
 
 #[napi]
 impl Host {
   #[napi(constructor)]
-  pub fn new(env: Env, ip: String, port: u16) -> Self {
+  pub fn new(ip: String, port: u16) -> Self {
     let host_addr: String = format!("{ip}:{port}");
     Host {
       host: enet::Host::new(
@@ -46,39 +45,55 @@ impl Host {
   }
 
   #[napi]
-  pub fn set_emit(&mut self, env: Env, func: JsFunction) -> Undefined {
-    let emit = Some(env.create_reference(func).unwrap());
-    self.emitter = emit;
+  pub fn set_emitter(&mut self, env: Env, emitter: JsFunction) -> Result<()> {
+    self.emitter = Some(env.create_reference(emitter).unwrap());
+    Ok(())
   }
 
   #[napi]
-  pub fn service(&self, env: Env) -> Undefined {
-    if let Some(ref emitter_ref) = &self.emitter {
-      // Assuming we call the JS function here with no arguments
-      emitter_ref.call(None, &[0]);
+  pub fn service(&mut self, env: Env) -> Result<()> {
+    if let Some(ref emitter) = self.emitter {
+      let callback: JsFunction = env.get_reference_value_unchecked(emitter)?;
+
+      match self.host.service() {
+        Ok(Some(event)) => match event {
+          enet::Event::Connect { peer, .. } => {
+            let args = vec![
+              env.create_string("connect")?.into_unknown(),
+              env.create_uint32(peer.id().0 as u32)?.into_unknown(),
+            ];
+            callback.call(None, &args)?;
+          }
+          enet::Event::Disconnect { peer, .. } => {
+            let args = vec![
+              env.create_string("disconnect")?.into_unknown(),
+              env.create_uint32(peer.id().0 as u32)?.into_unknown(),
+            ];
+            callback.call(None, &args)?;
+          }
+          enet::Event::Receive { peer, packet, .. } => {
+            let args = vec![
+              env.create_string("raw")?.into_unknown(),
+              env.create_uint32(peer.id().0 as u32)?.into_unknown(),
+              env
+                .create_buffer_with_data(packet.data().to_vec())?
+                .into_unknown(),
+            ];
+            callback.call(None, &args)?;
+          }
+        },
+        Ok(None) => {}
+        Err(e) => {
+          return Err(Error::new(
+            Status::GenericFailure,
+            format!("ENet service error: {}", e),
+          ));
+        }
+      }
+
+      std::thread::sleep(Duration::from_millis(10));
     }
-    // loop {
-    //   while let Some(event) = self.host.service().unwrap() {
-    //     match event {
-    //       enet::Event::Connect { peer, .. } => {
-    //         println!("Peer {} connected", peer.id().0);
-    //       }
-    //       enet::Event::Disconnect { peer, .. } => {
-    //         println!("Peer {} disconnected", peer.id().0);
-    //       }
-    //       enet::Event::Receive {
-    //         peer,
-    //         channel_id,
-    //         packet,
-    //       } => {
-    //         if let Ok(message) = str::from_utf8(packet.data()) {
-    //           println!("Received packet: {:?}", message);
-    //         }
-    //         _ = peer.send(channel_id, &packet);
-    //       }
-    //     }
-    //   }
-    //   std::thread::sleep(Duration::from_millis(10));
-    // }
+
+    Ok(())
   }
 }

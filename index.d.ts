@@ -8,6 +8,6 @@ export declare class Host {
   constructor(ip: string, port: number)
   get ipAddress(): string
   get port(): number
-  setEmit(func: (...args: any[]) => any): void
-  emit(): void
+  setEmitter(emitter: (...args: any[]) => any): void
+  service(): void
 }
