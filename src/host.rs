@@ -36,12 +36,12 @@ impl Host {
 
   #[napi(getter)]
   pub fn ip_address(&self) -> String {
-    return self.host.socket().local_addr().unwrap().ip().to_string();
+    self.host.socket().local_addr().unwrap().ip().to_string()
   }
 
   #[napi(getter)]
   pub fn port(&self) -> u16 {
-    return self.host.socket().local_addr().unwrap().port();
+    self.host.socket().local_addr().unwrap().port()
   }
 
   #[napi]
@@ -53,7 +53,7 @@ impl Host {
   #[napi]
   pub fn service(&mut self, env: Env) -> Result<()> {
     if let Some(ref emitter) = self.emitter {
-      let callback: JsFunction = env.get_reference_value_unchecked(emitter)?;
+      let callback: JsFunction = env.get_reference_value(emitter)?;
 
       match self.host.service() {
         Ok(Some(event)) => match event {

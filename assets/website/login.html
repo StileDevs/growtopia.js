@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        background-color: rgba(0, 0, 0, 0) !important;
+      }
+    </style>
+  </head>
+  <body>
+    <form action="/player/login/validate" method="POST" enctype="application/x-www-form-urlencoded">
+      <div>
+        <label for="growID">GrowID:</label><br />
+        <input type="text" id="growID" name="growID" autocomplete="off" required /><br />
+      </div>
+      <div>
+        <label for="pass">Password:</label><br />
+        <input type="password" id="pass" name="password" autocomplete="off" required /><br /><br />
+      </div>
+      <input type="submit" value="Submit" />
+    </form>
+  </body>
+</html>
