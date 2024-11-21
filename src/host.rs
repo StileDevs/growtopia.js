@@ -177,6 +177,10 @@ impl Host {
           }
         },
         Ok(None) => {}
+        Err(e) if e.kind() == std::io::ErrorKind::ConnectionReset => {
+          // eprintln!("Connection reset. Retrying...");
+          // ignore
+        }
         Err(e) => {
           return Err(Error::new(
             Status::GenericFailure,
