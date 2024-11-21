@@ -15,6 +15,7 @@ function onEvent(event, id, data) {
     const buf = Buffer.alloc(4);
     buf.writeUint32LE(1);
     server.send(id, buf, 0);
+    console.log(server.getPeerData(id));
   }
 }
 

@@ -6,7 +6,7 @@
       "sourceLanguages": ["rust"],
       "name": "Debug example",
       "program": "node",
-      "args": ["${workspaceFolder}/test.js"],
+      "args": ["${workspaceFolder}/__test__/test.js"],
       "cwd": "${workspaceFolder}"
     }
   ]

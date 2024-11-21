@@ -9,6 +9,7 @@ export declare class Host {
   get ipAddress(): string
   get port(): number
   connect(ipAddress: string, port: number): boolean
+  getPeerData(netId: number): void
   disconnect(netId: number): boolean
   disconnectLater(netId: number): boolean
   disconnectNow(netId: number): boolean

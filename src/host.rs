@@ -6,6 +6,8 @@ use std::str::FromStr;
 use std::time::Duration;
 use std::{net::SocketAddr, net::UdpSocket};
 
+use crate::peer::IPeer;
+
 #[napi(js_name = "Host")]
 pub struct Host {
   host: enet::Host<UdpSocket>,
@@ -60,6 +62,24 @@ impl Host {
   }
 
   #[napi]
+  pub fn get_peer_data(&self, env: Env, net_id: u32) -> Result<()> {
+    if let Some(peer) = self.host.get_peer(enet::PeerID(net_id.try_into().unwrap())) {
+      let mut js_peer = env.create_object()?;
+      let native_peer = IPeer {
+        rtt: peer.round_trip_time().as_secs(),
+      };
+
+      let obj = env.wrap(&mut js_peer, native_peer)?;
+      Ok(obj)
+    } else {
+      return Err(Error::new(
+        Status::GenericFailure,
+        "ENet peer cant find peer",
+      ));
+    }
+  }
+
+  #[napi]
   pub fn disconnect(&mut self, net_id: u32) -> Result<bool> {
     let peer = self
       .host
@@ -104,7 +124,7 @@ impl Host {
     if let Err(e) = peer.send(channel_id, &packet) {
       return Err(Error::new(
         Status::GenericFailure,
-        format!("ENet peer error: {}", e),
+        format!("ENet peer error cant send packet : {}", e),
       ));
     } else {
       Ok(true)
@@ -138,13 +158,6 @@ impl Host {
             ];
             callback.call(None, &args)?;
           }
-          enet::Event::Disconnect { peer, .. } => {
-            let args = vec![
-              env.create_string("disconnect")?.into_unknown(),
-              env.create_uint32(peer.id().0 as u32)?.into_unknown(),
-            ];
-            callback.call(None, &args)?;
-          }
           enet::Event::Receive { peer, packet, .. } => {
             let args = vec![
               env.create_string("raw")?.into_unknown(),
@@ -152,6 +165,13 @@ impl Host {
               env
                 .create_buffer_with_data(packet.data().to_vec())?
                 .into_unknown(),
+            ];
+            callback.call(None, &args)?;
+          }
+          enet::Event::Disconnect { peer, .. } => {
+            let args = vec![
+              env.create_string("disconnect")?.into_unknown(),
+              env.create_uint32(peer.id().0 as u32)?.into_unknown(),
             ];
             callback.call(None, &args)?;
           }
