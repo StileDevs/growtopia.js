@@ -1,4 +1,4 @@
-const { Host } = require("./index.js");
+const { Host } = require("../index.js");
 const { Hono } = require("hono");
 const { logger } = require("hono/logger");
 const { serveStatic } = require("@hono/node-server/serve-static");
@@ -7,9 +7,15 @@ const { createServer } = require("https");
 const { readFileSync } = require("fs");
 const { join, relative } = require("path");
 
-const server = new Host("0.0.0.0", 17091);
-function onEvent(event, id) {
-  console.log("Event received:", event, id);
+const server = new Host("0.0.0.0", 17091, 1024, 2, false);
+function onEvent(event, id, data) {
+  console.log("Event received:", event, id, data);
+
+  if (event === "connect") {
+    const buf = Buffer.alloc(4);
+    buf.writeUint32LE(1);
+    server.send(id, buf, 0);
+  }
 }
 
 (async () => {
@@ -26,7 +32,7 @@ async function Web() {
 
   app.use(logger((str, ...rest) => console.log(str, ...rest)));
 
-  const to = join(__dirname, "assets", "cache");
+  const to = join(__dirname, "..", "assets", "cache");
   const root = relative(__dirname, to);
 
   app.use(
@@ -73,7 +79,7 @@ async function Web() {
   });
 
   app.use("/player/login/dashboard", (ctx) => {
-    const html = readFileSync(join(__dirname, "assets", "website", "login.html"), "utf-8");
+    const html = readFileSync(join(__dirname, "..", "assets", "website", "login.html"), "utf-8");
     return ctx.html(html);
   });
 
@@ -93,8 +99,8 @@ async function Web() {
       port: 443,
       createServer,
       serverOptions: {
-        key: readFileSync(join(__dirname, "assets", "ssl", "server.key")),
-        cert: readFileSync(join(__dirname, "assets", "ssl", "server.crt"))
+        key: readFileSync(join(__dirname, "..", "assets", "ssl", "server.key")),
+        cert: readFileSync(join(__dirname, "..", "assets", "ssl", "server.crt"))
       }
     },
     (info) => {
@@ -108,8 +114,10 @@ async function Web() {
       port: 8080,
       createServer,
       serverOptions: {
-        key: readFileSync(join(__dirname, "assets", "ssl", "_wildcard.growserver.app-key.pem")),
-        cert: readFileSync(join(__dirname, "assets", "ssl", "_wildcard.growserver.app.pem"))
+        key: readFileSync(
+          join(__dirname, "..", "assets", "ssl", "_wildcard.growserver.app-key.pem")
+        ),
+        cert: readFileSync(join(__dirname, "..", "assets", "ssl", "_wildcard.growserver.app.pem"))
       }
     },
     (info) => {

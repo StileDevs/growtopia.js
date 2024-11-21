@@ -15,17 +15,23 @@ pub struct Host {
 #[napi]
 impl Host {
   #[napi(constructor)]
-  pub fn new(ip: String, port: u16) -> Self {
-    let host_addr: String = format!("{ip}:{port}");
+  pub fn new(
+    ip_address: String,
+    port: u16,
+    peer_limit: u32,
+    channel_limit: u8,
+    using_new_packet: bool,
+  ) -> Self {
+    let host_addr: String = format!("{ip_address}:{port}");
     Host {
       host: enet::Host::new(
         UdpSocket::bind(SocketAddr::from_str(&host_addr).unwrap()).unwrap(),
         enet::HostSettings {
-          peer_limit: 1024,
-          channel_limit: 2,
+          peer_limit: peer_limit.try_into().unwrap(),
+          channel_limit: channel_limit.try_into().unwrap(),
           compressor: Some(Box::new(enet::RangeCoder::new())),
           checksum: Some(Box::new(enet::crc32)),
-          using_new_packet: false,
+          using_new_packet,
           ..Default::default()
         },
       )
@@ -45,6 +51,67 @@ impl Host {
   }
 
   #[napi]
+  pub fn connect(&mut self, ip_address: String, port: u16) -> Result<bool> {
+    let addr = format!("{ip_address}:{port}");
+    let socket = SocketAddr::from_str(&addr).unwrap();
+    let _ = self.host.connect(socket, 2, 0).unwrap();
+
+    Ok(true)
+  }
+
+  #[napi]
+  pub fn disconnect(&mut self, net_id: u32) -> Result<bool> {
+    let peer = self
+      .host
+      .get_peer_mut(enet::PeerID(net_id.try_into().unwrap()))
+      .unwrap();
+
+    peer.disconnect(0);
+    Ok(true)
+  }
+
+  #[napi]
+  pub fn disconnect_later(&mut self, net_id: u32) -> Result<bool> {
+    let peer = self
+      .host
+      .get_peer_mut(enet::PeerID(net_id.try_into().unwrap()))
+      .unwrap();
+
+    peer.disconnect_later(0);
+    Ok(true)
+  }
+
+  #[napi]
+  pub fn disconnect_now(&mut self, net_id: u32) -> Result<bool> {
+    let peer = self
+      .host
+      .get_peer_mut(enet::PeerID(net_id.try_into().unwrap()))
+      .unwrap();
+
+    peer.disconnect_now(0);
+    Ok(true)
+  }
+
+  #[napi]
+  pub fn send(&mut self, net_id: u32, mut data: Buffer, channel_id: u8) -> Result<bool> {
+    let peer = self
+      .host
+      .get_peer_mut(enet::PeerID(net_id.try_into().unwrap()))
+      .unwrap();
+
+    let packet = enet::Packet::reliable(data.as_mut());
+
+    if let Err(e) = peer.send(channel_id, &packet) {
+      return Err(Error::new(
+        Status::GenericFailure,
+        format!("ENet peer error: {}", e),
+      ));
+    } else {
+      Ok(true)
+    }
+  }
+
+  #[napi]
   pub fn set_emitter(&mut self, env: Env, emitter: JsFunction) -> Result<()> {
     self.emitter = Some(env.create_reference(emitter).unwrap());
     Ok(())
@@ -52,6 +119,13 @@ impl Host {
 
   #[napi]
   pub fn service(&mut self, env: Env) -> Result<()> {
+    if self.emitter.is_none() {
+      return Err(Error::new(
+        Status::GenericFailure,
+        "ENet service error: emitter method empty",
+      ));
+    }
+
     if let Some(ref emitter) = self.emitter {
       let callback: JsFunction = env.get_reference_value(emitter)?;
 

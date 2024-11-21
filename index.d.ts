@@ -5,9 +5,14 @@
 
 export declare function sum(a: number, b: number): number
 export declare class Host {
-  constructor(ip: string, port: number)
+  constructor(ipAddress: string, port: number, peerLimit: number, channelLimit: number, usingNewPacket: boolean)
   get ipAddress(): string
   get port(): number
+  connect(ipAddress: string, port: number): boolean
+  disconnect(netId: number): boolean
+  disconnectLater(netId: number): boolean
+  disconnectNow(netId: number): boolean
+  send(netId: number, data: Buffer, channelId: number): boolean
   setEmitter(emitter: (...args: any[]) => any): void
   service(): void
 }
