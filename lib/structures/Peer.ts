@@ -6,7 +6,7 @@ import { Client } from "./Client";
 export class Peer<T extends PeerData> {
   public data: T;
 
-  constructor(private client: Client, netID: number, channelID: number) {
+  constructor(private client: Client, netID: number, channelID = 0) {
     this.data = {
       netID,
       channelID
