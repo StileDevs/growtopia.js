@@ -2,14 +2,14 @@
   "name": "growtopia.js",
   "description": "A Node.js & Bun.js ENet framework to create growtopia private server that written in Rust.",
   "version": "2.0.1",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./index.d.ts",
-      "bun": "./index.js",
+      "types": "./dist/index.d.ts",
+      "bun": "./dist/index.js",
       "import": "./esm.mjs",
-      "require": "./index.js"
+      "require": "./dist/index.js"
     }
   },
   "napi": {
@@ -75,23 +75,5 @@
     "test": "ava",
     "universal": "napi universal",
     "version": "napi version"
-  },
-  "optionalDependencies": {
-    "growtopia.js-win32-x64-msvc": "2.0.0",
-    "growtopia.js-darwin-x64": "2.0.0",
-    "growtopia.js-linux-x64-gnu": "2.0.0",
-    "growtopia.js-darwin-arm64": "2.0.0",
-    "growtopia.js-android-arm64": "2.0.0",
-    "growtopia.js-linux-arm64-gnu": "2.0.0",
-    "growtopia.js-linux-arm64-musl": "2.0.0",
-    "growtopia.js-win32-arm64-msvc": "2.0.0",
-    "growtopia.js-linux-arm-gnueabihf": "2.0.0",
-    "growtopia.js-linux-arm-musleabihf": "2.0.0",
-    "growtopia.js-linux-x64-musl": "2.0.0",
-    "growtopia.js-freebsd-x64": "2.0.0",
-    "growtopia.js-win32-ia32-msvc": "2.0.0",
-    "growtopia.js-android-arm-eabi": "2.0.0",
-    "growtopia.js-darwin-universal": "2.0.0",
-    "growtopia.js-linux-riscv64-gnu": "2.0.0"
   }
 }
