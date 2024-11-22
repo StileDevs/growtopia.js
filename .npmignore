@@ -10,6 +10,7 @@ yarn.lock
 *.node
 .yarn
 __test__
+docs
 src
 lib
 renovate.json

@@ -1,5 +1,6 @@
 {
   "name": "growtopia.js",
+  "description": "A Node.js & Bun.js ENet framework to create growtopia private server that written in Rust.",
   "version": "2.0.0",
   "main": "index.js",
   "types": "index.d.ts",
@@ -57,10 +58,7 @@
   "bugs": {
     "url": "https://github.com/StileDevs/growtopia.js/issues"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/StileDevs/growtopia.js.git"
-  },
+  "repository": "https://github.com/StileDevs/growtopia.js",
   "keywords": [
     "growtopia",
     "rust",

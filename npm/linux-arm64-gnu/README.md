@@ -1,3 +1,3 @@
-# `growtopia-js-linux-arm64-gnu`
+# `-linux-arm64-gnu`
 
-This is the **aarch64-unknown-linux-gnu** binary for `growtopia-js`
+This is the **aarch64-unknown-linux-gnu** binary for ``

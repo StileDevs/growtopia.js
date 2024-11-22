@@ -1,6 +1,6 @@
 {
-  "name": "growtopia-js-darwin-arm64",
-  "version": "0.0.0",
+  "name": "-darwin-arm64",
+  "version": "2.0.0",
   "os": [
     "darwin"
   ],
@@ -11,8 +11,20 @@
   "files": [
     "growtopia-js.darwin-arm64.node"
   ],
+  "description": "A Node.js & Bun.js ENet framework to create growtopia private server that written in Rust.",
+  "keywords": [
+    "growtopia",
+    "rust",
+    "enet"
+  ],
+  "author": "JadlionHD <jadlion.dev@gmail.com>",
+  "homepage": "https://github.com/StileDevs/growtopia.js#readme",
   "license": "MIT",
   "engines": {
     "node": ">= 10"
+  },
+  "repository": "https://github.com/StileDevs/growtopia.js",
+  "bugs": {
+    "url": "https://github.com/StileDevs/growtopia.js/issues"
   }
 }

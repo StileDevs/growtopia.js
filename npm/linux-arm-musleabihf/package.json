@@ -1,6 +1,6 @@
 {
-  "name": "growtopia-js-linux-arm-musleabihf",
-  "version": "0.0.0",
+  "name": "-linux-arm-musleabihf",
+  "version": "2.0.0",
   "os": [
     "linux"
   ],
@@ -11,8 +11,20 @@
   "files": [
     "growtopia-js.linux-arm-musleabihf.node"
   ],
+  "description": "A Node.js & Bun.js ENet framework to create growtopia private server that written in Rust.",
+  "keywords": [
+    "growtopia",
+    "rust",
+    "enet"
+  ],
+  "author": "JadlionHD <jadlion.dev@gmail.com>",
+  "homepage": "https://github.com/StileDevs/growtopia.js#readme",
   "license": "MIT",
   "engines": {
     "node": ">= 10"
+  },
+  "repository": "https://github.com/StileDevs/growtopia.js",
+  "bugs": {
+    "url": "https://github.com/StileDevs/growtopia.js/issues"
   }
 }
