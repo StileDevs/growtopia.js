@@ -1,5 +1,5 @@
 {
-  "name": "-linux-arm-gnueabihf",
+  "name": "growtopia.js-linux-arm-gnueabihf",
   "version": "2.0.0",
   "os": [
     "linux"

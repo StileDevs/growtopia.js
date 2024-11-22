@@ -1,3 +1,3 @@
-# `-linux-riscv64-gnu`
+# `growtopia.js-linux-riscv64-gnu`
 
-This is the **riscv64gc-unknown-linux-gnu** binary for ``
+This is the **riscv64gc-unknown-linux-gnu** binary for `growtopia.js`

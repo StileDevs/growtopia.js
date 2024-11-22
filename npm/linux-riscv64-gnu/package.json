@@ -1,5 +1,5 @@
 {
-  "name": "-linux-riscv64-gnu",
+  "name": "growtopia.js-linux-riscv64-gnu",
   "version": "2.0.0",
   "os": [
     "linux"

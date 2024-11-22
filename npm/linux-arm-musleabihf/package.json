@@ -1,5 +1,5 @@
 {
-  "name": "-linux-arm-musleabihf",
+  "name": "growtopia.js-linux-arm-musleabihf",
   "version": "2.0.0",
   "os": [
     "linux"
