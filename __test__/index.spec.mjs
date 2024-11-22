@@ -1,16 +1,11 @@
 import test from "ava";
 
-import { sum, Host } from "../index.js";
-
-test("sum from native", (t) => {
-  t.is(sum(1, 2), 3);
-});
+import { Host } from "../esm.mjs";
 
 function cbTest() {
   console.log("awd");
 }
-const server = new Host("0.0.0.0", 17091);
-// const acceptPromise = () => new Promise((resolve) => setImmediate(() => resolve(server.service())));
+const server = new Host("0.0.0.0", 17091, 1024, 2, false);
 
 test("get ip address from server socket native", (t) => {
   t.is(server.ipAddress, "0.0.0.0");
@@ -21,7 +16,7 @@ test("get port from server socket native", (t) => {
 });
 
 test("test server service", (t) => {
-  server.setEventEmitter(cbTest);
+  server.setEmitter(cbTest);
 
   try {
     server.service();
