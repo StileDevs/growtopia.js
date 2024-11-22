@@ -11,6 +11,9 @@ yarn.lock
 .yarn
 __test__
 docs
+assets
+typedoc.json
+tsconfig.json
 src
 lib
 renovate.json
