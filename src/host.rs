@@ -1,12 +1,10 @@
 use core::str;
-use napi::{bindgen_prelude::*, Ref};
+use napi::{bindgen_prelude::*, JsObject, Ref};
 use napi::{Env, JsFunction};
 use rusty_enet as enet;
 use std::str::FromStr;
 use std::time::Duration;
 use std::{net::SocketAddr, net::UdpSocket};
-
-use crate::peer::IPeer;
 
 #[napi(js_name = "Host")]
 pub struct Host {
@@ -62,20 +60,33 @@ impl Host {
   }
 
   #[napi]
-  pub fn get_peer_data(&self, env: Env, net_id: u32) -> Result<()> {
+  pub fn get_peer_data(&self, env: Env, net_id: u32) -> Result<JsObject> {
     if let Some(peer) = self.host.get_peer(enet::PeerID(net_id.try_into().unwrap())) {
       let mut js_peer = env.create_object()?;
-      let native_peer = IPeer {
-        rtt: peer.round_trip_time().as_secs(),
-      };
+      let peer_addr = peer.address().unwrap();
 
-      let obj = env.wrap(&mut js_peer, native_peer)?;
-      Ok(obj)
+      if let Err(err) = js_peer.set("rtt", peer.round_trip_time().as_millis() as u32) {
+        return Err(Error::new(
+          Status::GenericFailure,
+          format!("Failed to set 'rtt': {:?}", err),
+        ));
+      }
+      if let Err(err) = js_peer.set("port", peer_addr.port()) {
+        return Err(Error::new(
+          Status::GenericFailure,
+          format!("Failed to set 'port': {:?}", err),
+        ));
+      }
+      if let Err(err) = js_peer.set("ip", peer_addr.ip().to_string()) {
+        return Err(Error::new(
+          Status::GenericFailure,
+          format!("Failed to set 'ip': {:?}", err),
+        ));
+      }
+
+      Ok(js_peer)
     } else {
-      return Err(Error::new(
-        Status::GenericFailure,
-        "ENet peer cant find peer",
-      ));
+      return Err(Error::new(Status::InvalidArg, "ENet peer cant find peer"));
     }
   }
 
@@ -158,10 +169,16 @@ impl Host {
             ];
             callback.call(None, &args)?;
           }
-          enet::Event::Receive { peer, packet, .. } => {
+          enet::Event::Receive {
+            peer,
+            packet,
+            channel_id,
+            ..
+          } => {
             let args = vec![
               env.create_string("raw")?.into_unknown(),
               env.create_uint32(peer.id().0 as u32)?.into_unknown(),
+              env.create_uint32(channel_id as u32)?.into_unknown(),
               env
                 .create_buffer_with_data(packet.data().to_vec())?
                 .into_unknown(),
