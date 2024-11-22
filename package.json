@@ -1,65 +1,81 @@
 {
   "name": "growtopia.js",
-  "version": "1.6.2",
-  "description": "A package to create a growtopia private servers.",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "type": "module",
+  "version": "2.0.0",
+  "main": "index.js",
+  "types": "index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "bun": "./dist/index.js",
-      "import": "./dist/index.js",
-      "require": "./dist/index.js"
+      "types": "./index.d.ts",
+      "bun": "./index.js",
+      "import": "./esm.mjs",
+      "require": "./index.js"
     }
   },
-  "scripts": {
-    "test": "npm run build:prebuild && npm run build:ts && node test/basic.js",
-    "dev": "rimraf dist && npm run build && npm run build:ts && node test/basic-example/index.js",
-    "dev:nonative": "rimraf dist && npm run build:ts",
-    "docs:gen": "rimraf docs && typedoc",
-    "build:prebuild": "prebuildify --napi",
-    "build": "node-gyp-build",
-    "build:gyp": "node-gyp configure rebuild",
-    "build:ts": "rimraf dist && tsc && cp -r src/types dist/types",
-    "install": "node-gyp-build"
+  "napi": {
+    "name": "growtopia-js",
+    "triples": {
+      "additional": [
+        "aarch64-apple-darwin",
+        "aarch64-linux-android",
+        "aarch64-unknown-linux-gnu",
+        "aarch64-unknown-linux-musl",
+        "aarch64-pc-windows-msvc",
+        "armv7-unknown-linux-gnueabihf",
+        "armv7-unknown-linux-musleabihf",
+        "x86_64-unknown-linux-musl",
+        "x86_64-unknown-freebsd",
+        "i686-pc-windows-msvc",
+        "armv7-linux-androideabi",
+        "universal-apple-darwin",
+        "riscv64gc-unknown-linux-gnu"
+      ]
+    }
   },
-  "homepage": "https://github.com/JadlionHD/growtopia.js#readme",
+  "license": "MIT",
+  "dependencies": {
+    "@mapbox/node-pre-gyp": "^1.0.11",
+    "eventemitter3": "^5.0.1"
+  },
+  "devDependencies": {
+    "@antfu/ni": "^0.23.1",
+    "@hono/node-server": "^1.13.7",
+    "@napi-rs/cli": "^2.18.4",
+    "@types/node": "^22.9.0",
+    "ava": "^6.0.1",
+    "hono": "^4.6.10",
+    "rimraf": "5.0.10",
+    "typedoc": "^0.26.11",
+    "typescript": "^5.6.3"
+  },
+  "ava": {
+    "timeout": "3m"
+  },
+  "engines": {
+    "node": ">= 10"
+  },
+  "homepage": "https://github.com/StileDevs/growtopia.js#readme",
   "bugs": {
-    "url": "https://github.com/JadlionHD/growtopia.js/issues"
+    "url": "https://github.com/StileDevs/growtopia.js/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JadlionHD/growtopia.js.git"
+    "url": "git+https://github.com/StileDevs/growtopia.js.git"
   },
   "keywords": [
-    "growtopia"
+    "growtopia",
+    "rust",
+    "enet"
   ],
   "author": "JadlionHD <jadlion.dev@gmail.com>",
-  "license": "MIT",
-  "gypfile": true,
-  "binary": {
-    "module_name": "gtjs",
-    "module_path": "./build/Release/",
-    "package_name": "gtjs-v{version}-{platform}-{arch}.tar.gz",
-    "host": "https://github.com/JadlionHD/growtopia.js/releases/download/",
-    "remote_path": "v{version}"
-  },
-  "engines": {
-    "node": ">=18.0.0",
-    "npm": ">=7.0.0"
-  },
-  "dependencies": {
-    "eventemitter3": "^5.0.1",
-    "node-addon-api": "^8.0.0",
-    "node-gyp": "^10.1.0",
-    "node-gyp-build": "^4.8.1"
-  },
-  "devDependencies": {
-    "@types/node": "^22.7.5",
-    "prebuildify": "^6.0.1",
-    "rimraf": "^5.0.1",
-    "typedoc": "^0.26.5",
-    "typescript": "^5.6.3"
+  "scripts": {
+    "docs": "rimraf docs && typedoc",
+    "artifacts": "napi artifacts",
+    "build": "nr build:ts && napi build --platform --js native.js --dts native.d.ts --release",
+    "build:ts": "rimraf dist && tsc",
+    "build:debug": "napi build --platform --js native.js --dts native.d.ts ",
+    "prepublishOnly": "napi prepublish -t npm",
+    "test": "ava",
+    "universal": "napi universal",
+    "version": "napi version"
   }
 }

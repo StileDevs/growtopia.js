@@ -1,0 +1,13 @@
+{
+  "configurations": [
+    {
+      "type": "lldb",
+      "request": "launch",
+      "sourceLanguages": ["rust"],
+      "name": "Debug example",
+      "program": "node",
+      "args": ["${workspaceFolder}/__test__/test.js"],
+      "cwd": "${workspaceFolder}"
+    }
+  ]
+}

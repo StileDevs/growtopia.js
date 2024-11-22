@@ -1,19 +1,15 @@
-![GrowtopiaJS](/.github/images/banner.png)
+![GrowtopiaJS](/assets/images/banner.png)
 
 ![Github Version](https://img.shields.io/github/package-json/v/jadlionhd/growtopia.js?style=flat-square)
 ![NPM Version](https://img.shields.io/npm/v/growtopia.js?style=flat-square)
 ![NPM Minified](https://img.shields.io/bundlephobia/min/growtopia.js?style=flat-square)
 
-A fork of [GrowSockets](https://github.com/Pogtopia/GrowSockets) to create a growtopia private servers.
+A Node.js & Bun.js ENet framework to create growtopia private server that written in Rust.
 
 ## Features
 
 - Stable
 - Built-in ItemsDat tools
-
-## Requirements
-
-- [Node.js v18+](https://nodejs.org/en) (No need to build from source)
 
 ## Installation
 
@@ -59,17 +55,6 @@ client.on("raw", (netID, data) => {
 client.listen();
 ```
 
-## Building
-
-### Requirements
-
-- [C++ Build Tools](https://visualstudio.microsoft.com/vs/features/cplusplus/) (Linux: build-essential)
-- [Python (Recommeded v3.11)](https://www.python.org/downloads/)
-
-```sh
-npm i growtopia.js --build-from-source
-```
-
 ## Links
 
 - [Documentation](https://jadlionhd.github.io/growtopia.js/)
@@ -79,4 +64,4 @@ npm i growtopia.js --build-from-source
 
 Give a thumbs to these cool people
 
-- [Syn9673](https://github.com/Syn9673) - with his [GrowSockets](https://github.com/Pogtopia/GrowSockets).
+- [Syn9673](https://github.com/Syn9673)
