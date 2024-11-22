@@ -1,4 +1,4 @@
-const { Host } = require("../index.js");
+const { TextPacket } = require("../dist/index.js");
 const { Hono } = require("hono");
 const { logger } = require("hono/logger");
 const { serveStatic } = require("@hono/node-server/serve-static");
@@ -7,25 +7,28 @@ const { createServer } = require("https");
 const { readFileSync } = require("fs");
 const { join, relative } = require("path");
 
-const server = new Host("0.0.0.0", 17091, 1024, 2, false);
-function onEvent(event, id, data) {
-  console.log("Event received:", event, id, data);
+const { Client } = require("../dist/index.js");
 
-  if (event === "connect") {
-    const buf = Buffer.alloc(4);
-    buf.writeUint32LE(1);
-    server.send(id, buf, 0);
-    console.log(server.getPeerData(id));
-  }
-}
+const server = new Client();
+
+server.on("connect", (netID) => {
+  console.log("Connected ", netID);
+  server.send(netID, 0, TextPacket.from(0x1));
+});
+server.on("raw", (netID, channelID, data) => {
+  console.log("Raw ", channelID, data);
+  console.log(server.host.getPeerData(netID));
+});
+
+server.on("disconnect", (netID) => {
+  console.log("Disconnect ", netID);
+});
+
+server.listen();
 
 (async () => {
   await Web();
-  server.setEmitter(onEvent);
-  console.log(server.port);
-  const acceptPromise = () =>
-    new Promise((resolve) => setImmediate(() => resolve(server.service())));
-  while (true) await acceptPromise();
+  console.log(server.host.port);
 })();
 
 async function Web() {
