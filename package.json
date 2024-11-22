@@ -3,6 +3,14 @@
   "version": "2.0.0",
   "main": "index.js",
   "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "bun": "./index.js",
+      "import": "./esm.mjs",
+      "require": "./index.js"
+    }
+  },
   "napi": {
     "name": "growtopia-js",
     "triples": {
@@ -24,14 +32,19 @@
     }
   },
   "license": "MIT",
+  "dependencies": {
+    "@mapbox/node-pre-gyp": "^1.0.11",
+    "eventemitter3": "^5.0.1"
+  },
   "devDependencies": {
+    "@antfu/ni": "^0.23.1",
     "@hono/node-server": "^1.13.7",
     "@napi-rs/cli": "^2.18.4",
     "@types/node": "^22.9.0",
     "ava": "^6.0.1",
     "hono": "^4.6.10",
-    "pkgroll": "^2.5.1",
-    "tsup": "^8.3.5",
+    "rimraf": "^6.0.1",
+    "typedoc": "^0.26.11",
     "typescript": "^5.6.3"
   },
   "ava": {
@@ -49,13 +62,17 @@
     "url": "git+https://github.com/StileDevs/growtopia.js.git"
   },
   "keywords": [
-    "growtopia"
+    "growtopia",
+    "rust",
+    "enet"
   ],
   "author": "JadlionHD <jadlion.dev@gmail.com>",
   "scripts": {
+    "docs": "rimraf docs && typedoc",
     "artifacts": "napi artifacts",
-    "build": "napi build --platform --release",
-    "build:debug": "napi build --platform",
+    "build": "nr build:ts && napi build --platform --js native.js --dts native.d.ts --release",
+    "build:ts": "rimraf dist && tsc",
+    "build:debug": "napi build --platform --js native.js --dts native.d.ts ",
     "prepublishOnly": "napi prepublish -t npm",
     "test": "ava",
     "universal": "napi universal",
