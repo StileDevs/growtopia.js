@@ -36,7 +36,7 @@ export class ItemsDat {
 
       for (const key of keys) {
         const strBuf = item[key] as unknown as string;
-        if (this.stringFields.includes(key) && strBuf) {
+        if (this.stringFields.includes(key) && typeof strBuf === "string") {
           // calc length typeof item[key] === "string"
           size += strBuf.length + 2;
         }
