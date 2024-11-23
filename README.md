@@ -2,7 +2,7 @@
 ![Github Stars](https://img.shields.io/github/stars/StileDevs/growtopia.js?style=flat-square&link=https%3A%2F%2Fgithub.com%2FStileDevs%2Fgrowtopia.js)
 ![NPM Version](https://img.shields.io/npm/v/growtopia.js?style=flat-square&link=https%3A%2F%2Fnpmjs.com%2Fpackage%2Fgrowtopia.js)
 ![NPM Downloads](https://img.shields.io/npm/dw/growtopia.js?link=https%3A%2F%2Fnpmjs.com%2Fpackage%2Fgrowtopia.js&color=blue)
-![NPM Minified](https://img.shields.io/bundlephobia/min/growtopia.js?style=flat-square)
+![NPM Minified](https://img.shields.io/bundlephobia/min/growtopia.js?style=flat-square&link=https%3A%2F%2Fnpmjs.com%2Fpackage%2Fgrowtopia.js&color=blue)
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/StileDevs/growtopia.js/CI.yml?branch=main&link=https%3A%2F%2Fgithub.com%2FStileDevs%2Fgrowtopia.js%2Factions)
 
 A Rust based, cross-platform, high-performance Growtopia private server ENet framework utilizing Node.js, Bun.js.
