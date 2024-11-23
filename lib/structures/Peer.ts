@@ -1,5 +1,5 @@
 import type { Host } from "../../native";
-import type { PeerData, Sendable } from "../../types";
+import type { NativePeerData, PeerData, Sendable } from "../../types";
 import { Variant } from "../packets/Variant";
 import { Client } from "./Client";
 
@@ -15,8 +15,8 @@ export class Peer<T extends PeerData> {
     this.client = client;
   }
 
-  public get enet() {
-    return this.client.host.getPeerData(this.data.netID) as unknown;
+  public get enet(): NativePeerData {
+    return this.client.host.getPeerData(this.data.netID) as NativePeerData;
   }
 
   /**

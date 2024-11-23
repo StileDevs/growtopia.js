@@ -1,10 +1,11 @@
 ![GrowtopiaJS](/assets/images/banner.png)
+![Github Stars](https://img.shields.io/github/stars/StileDevs/growtopia.js?style=flat-square&link=https%3A%2F%2Fgithub.com%2FStileDevs%2Fgrowtopia.js)
+![NPM Version](https://img.shields.io/npm/v/growtopia.js?style=flat-square&link=https%3A%2F%2Fnpmjs.com%2Fpackage%2Fgrowtopia.js)
+![NPM Downloads](https://img.shields.io/npm/dw/growtopia.js?link=https%3A%2F%2Fnpmjs.com%2Fpackage%2Fgrowtopia.js&color=blue)
+![NPM Minified](https://img.shields.io/bundlephobia/min/growtopia.js?style=flat-square&link=https%3A%2F%2Fnpmjs.com%2Fpackage%2Fgrowtopia.js&color=blue)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/StileDevs/growtopia.js/CI.yml?branch=main&link=https%3A%2F%2Fgithub.com%2FStileDevs%2Fgrowtopia.js%2Factions)
 
-![Github Version](https://img.shields.io/github/package-json/v/jadlionhd/growtopia.js?style=flat-square)
-![NPM Version](https://img.shields.io/npm/v/growtopia.js?style=flat-square)
-![NPM Minified](https://img.shields.io/bundlephobia/min/growtopia.js?style=flat-square)
-
-A Node.js & Bun.js ENet framework to create growtopia private server that written in Rust.
+A Rust based, cross-platform, high-performance Growtopia private server ENet framework utilizing Node.js, Bun.js.
 
 ## Features
 
@@ -20,11 +21,12 @@ npm i growtopia.js
 ## Example
 
 ```js
-import { Client, TextPacket, Peer } from "growtopia.js";
+const { Client, TextPacket, Peer } = require("growtopia.js");
 
 const client = new Client({
   enet: {
-    ip: "0.0.0.0"
+    ip: "0.0.0.0",
+    port: 17091
   }
 });
 
@@ -46,10 +48,10 @@ client.on("disconnect", (netID) => {
   console.log(`Disconnected netID ${netID}`);
 });
 
-client.on("raw", (netID, data) => {
+client.on("raw", (netID, channelID, data) => {
   const peer = new Peer(client, netID);
   console.log("raw", data);
-  console.log(peer.ping, peer.state);
+  console.log(peer.enet.address, peer.port);
 });
 
 client.listen();
