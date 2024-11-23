@@ -55,11 +55,13 @@ export class Peer<T extends PeerData> {
       }
     });
 
-    return _client.send(
-      netID,
-      Buffer.concat(packets.filter((packet): packet is Buffer => packet !== undefined)),
-      channelID
-    );
+    packets
+      .filter((packet): packet is Buffer => packet !== undefined)
+      .forEach((v) => {
+        _client.send(netID, v as Buffer, channelID);
+      });
+
+    return;
   }
 
   /**

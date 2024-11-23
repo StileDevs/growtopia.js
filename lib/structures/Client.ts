@@ -61,11 +61,13 @@ export class Client extends EventEmitter {
       }
     });
 
-    return this.host.send(
-      netID,
-      Buffer.concat(packets.filter((packet): packet is Buffer => packet !== undefined)),
-      channelID
-    );
+    packets
+      .filter((packet): packet is Buffer => packet !== undefined)
+      .forEach((v) => {
+        this.host.send(netID, v as Buffer, channelID);
+      });
+
+    return;
   }
 
   public connect(ipAddress: string, port: number) {
