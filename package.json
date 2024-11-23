@@ -1,7 +1,7 @@
 {
   "name": "growtopia.js",
   "description": "A Node.js & Bun.js ENet framework to create growtopia private server that written in Rust.",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
