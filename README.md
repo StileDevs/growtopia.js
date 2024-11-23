@@ -51,7 +51,6 @@ client.on("disconnect", (netID) => {
 client.on("raw", (netID, channelID, data) => {
   const peer = new Peer(client, netID);
   console.log("raw", data);
-  console.log(peer.enet.address, peer.port);
 });
 
 client.listen();
