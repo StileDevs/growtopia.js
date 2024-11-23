@@ -180,7 +180,7 @@ export interface VariantTypeString extends VariantTypeBase {
 export type VariantArray = VariantTypeString | VariantTypeNumber | VariantTypeFloat;
 
 export interface NativePeerData {
-  address: string;
+  ip: string;
   port: number;
   rtt: number;
 }
