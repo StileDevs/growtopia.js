@@ -2,6 +2,7 @@ use core::str;
 use napi::{bindgen_prelude::*, JsObject, Ref};
 use napi::{Env, JsFunction};
 use rusty_enet as enet;
+use std::net::{Ipv4Addr, SocketAddrV4};
 use std::str::FromStr;
 use std::time::Duration;
 use std::{net::SocketAddr, net::UdpSocket};
@@ -10,6 +11,9 @@ use std::{net::SocketAddr, net::UdpSocket};
 pub struct Host {
   host: enet::Host<UdpSocket>,
   emitter: Option<Ref<()>>,
+  ip_address: String,
+  port: u16,
+  using_new_packet: bool,
 }
 
 #[napi]
@@ -23,20 +27,32 @@ impl Host {
     using_new_packet: bool,
   ) -> Self {
     let host_addr: String = format!("{ip_address}:{port}");
+
+    let socket = if using_new_packet {
+      UdpSocket::bind(SocketAddr::V4(SocketAddrV4::new(Ipv4Addr::UNSPECIFIED, 0))).unwrap()
+    } else {
+      UdpSocket::bind(SocketAddr::from_str(&host_addr).unwrap()).unwrap()
+    };
+
+    let host = enet::Host::new(
+      socket,
+      enet::HostSettings {
+        peer_limit: peer_limit.try_into().unwrap(),
+        channel_limit: channel_limit.try_into().unwrap(),
+        compressor: Some(Box::new(enet::RangeCoder::new())),
+        checksum: Some(Box::new(enet::crc32)),
+        using_new_packet,
+        ..Default::default()
+      },
+    )
+    .expect("Failed to create host");
+
     Host {
-      host: enet::Host::new(
-        UdpSocket::bind(SocketAddr::from_str(&host_addr).unwrap()).unwrap(),
-        enet::HostSettings {
-          peer_limit: peer_limit.try_into().unwrap(),
-          channel_limit: channel_limit.try_into().unwrap(),
-          compressor: Some(Box::new(enet::RangeCoder::new())),
-          checksum: Some(Box::new(enet::crc32)),
-          using_new_packet,
-          ..Default::default()
-        },
-      )
-      .unwrap(),
+      host,
       emitter: None,
+      ip_address,
+      port,
+      using_new_packet,
     }
   }
 
@@ -54,9 +70,10 @@ impl Host {
   pub fn connect(&mut self, ip_address: String, port: u16) -> Result<bool> {
     let addr = format!("{ip_address}:{port}");
     let socket = SocketAddr::from_str(&addr).unwrap();
-    let _ = self.host.connect(socket, 2, 0).unwrap();
-
-    Ok(true)
+    match self.host.connect(socket, 2, 0) {
+      Ok(_peer) => Ok(true),
+      Err(_err) => Ok(false),
+    }
   }
 
   #[napi]
@@ -145,6 +162,7 @@ impl Host {
   #[napi]
   pub fn set_emitter(&mut self, env: Env, emitter: JsFunction) -> Result<()> {
     self.emitter = Some(env.create_reference(emitter).unwrap());
+
     Ok(())
   }
 
