@@ -16,7 +16,8 @@ export class Client extends EventEmitter {
         port: options?.enet?.port ?? 17091,
         maxPeers: options?.enet?.maxPeers ?? 1024,
         useNewPacket: {
-          asClient: options?.enet?.useNewPacket?.asClient ?? false
+          asClient: options?.enet?.useNewPacket?.asClient ?? false,
+          asServer: options?.enet?.useNewPacket?.asServer ?? false
         },
         channelLimit: options?.enet?.channelLimit ?? 2
       }
@@ -27,7 +28,8 @@ export class Client extends EventEmitter {
       this.config.enet?.port!,
       this.config.enet?.maxPeers!,
       this.config.enet?.channelLimit!,
-      this.config.enet?.useNewPacket?.asClient!
+      this.config.enet?.useNewPacket?.asClient!,
+      this.config.enet?.useNewPacket?.asServer!
     );
   }
 

@@ -200,6 +200,7 @@ export interface ENetServerOptions {
   maxPeers?: number;
   useNewPacket?: {
     asClient?: boolean;
+    asServer?: boolean;
   };
   channelLimit?: number;
 }

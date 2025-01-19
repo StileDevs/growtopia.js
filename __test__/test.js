@@ -1,4 +1,4 @@
-const { TextPacket } = require("../dist/index.js");
+const { TextPacket, ItemsDat } = require("../dist/index.js");
 const { Hono } = require("hono");
 const { logger } = require("hono/logger");
 const { serveStatic } = require("@hono/node-server/serve-static");
@@ -9,7 +9,13 @@ const { join, relative } = require("path");
 
 const { Client } = require("../dist/index.js");
 
-const server = new Client();
+const server = new Client({
+  enet: {
+    useNewPacket: {
+      asServer: true
+    }
+  }
+});
 
 server.on("connect", (netID) => {
   console.log("Connected ", netID);
@@ -28,6 +34,11 @@ server.listen();
 
 (async () => {
   await Web();
+  const file = readFileSync("./assets/items-v18.dat");
+  const item = new ItemsDat(file);
+
+  await item.decode();
+  await item.encode();
   console.log(server.host.port);
 })();
 
