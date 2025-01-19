@@ -12,6 +12,8 @@ export declare class Host {
   disconnect(netId: number): boolean
   disconnectLater(netId: number): boolean
   disconnectNow(netId: number): boolean
+  setTimeout(netId: number, limit: number, min: number, max: number): boolean
+  setPingInterval(netId: number, pingInterval: number): boolean
   send(netId: number, data: Buffer, channelId: number): boolean
   setEmitter(emitter: (...args: any[]) => any): void
   service(): void

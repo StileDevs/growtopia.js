@@ -143,6 +143,28 @@ impl Host {
   }
 
   #[napi]
+  pub fn set_timeout(&mut self, net_id: u32, limit: u32, min: u32, max: u32) -> Result<bool> {
+    let peer = self
+      .host
+      .get_peer_mut(enet::PeerID(net_id.try_into().unwrap()))
+      .unwrap();
+
+    peer.set_timeout(limit, min, max);
+    Ok(true)
+  }
+
+  #[napi]
+  pub fn set_ping_interval(&mut self, net_id: u32, ping_interval: u32) -> Result<bool> {
+    let peer = self
+      .host
+      .get_peer_mut(enet::PeerID(net_id.try_into().unwrap()))
+      .unwrap();
+
+    peer.set_ping_interval(ping_interval);
+    Ok(true)
+  }
+
+  #[napi]
   pub fn send(&mut self, net_id: u32, mut data: Buffer, channel_id: u8) -> Result<bool> {
     let peer = self
       .host
