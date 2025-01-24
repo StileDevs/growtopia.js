@@ -8,6 +8,7 @@ crate-type = ["cdylib"]
 
 [dependencies]
 rusty_enet = { git = "https://github.com/JadlionHD/rusty_enet.git" }
+# rusty_enet = { path = "D:\\Projects\\NodeJS_Projects\\StileDevs\\rusty_enet" }
 # Default enable napi4 feature, see https://nodejs.org/api/n-api.html#node-api-version-matrix
 napi = { version = "2.12.2", default-features = false, features = ["napi4"] }
 napi-derive = "2.12.2"

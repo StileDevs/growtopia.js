@@ -11,9 +11,6 @@ use std::{net::SocketAddr, net::UdpSocket};
 pub struct Host {
   host: enet::Host<UdpSocket>,
   emitter: Option<Ref<()>>,
-  ip_address: String,
-  port: u16,
-  using_new_packet: bool,
 }
 
 #[napi]
@@ -30,7 +27,11 @@ impl Host {
     let host_addr: String = format!("{ip_address}:{port}");
 
     let socket = if using_new_packet {
-      UdpSocket::bind(SocketAddr::V4(SocketAddrV4::new(Ipv4Addr::UNSPECIFIED, 0))).unwrap()
+      UdpSocket::bind(SocketAddr::V4(SocketAddrV4::new(
+        Ipv4Addr::UNSPECIFIED,
+        port,
+      )))
+      .unwrap()
     } else {
       UdpSocket::bind(SocketAddr::from_str(&host_addr).unwrap()).unwrap()
     };
@@ -52,9 +53,6 @@ impl Host {
     Host {
       host,
       emitter: None,
-      ip_address,
-      port,
-      using_new_packet,
     }
   }
 
@@ -97,6 +95,12 @@ impl Host {
         ));
       }
       if let Err(err) = js_peer.set("ip", peer_addr.ip().to_string()) {
+        return Err(Error::new(
+          Status::GenericFailure,
+          format!("Failed to set 'ip': {:?}", err),
+        ));
+      }
+      if let Err(err) = js_peer.set("state", peer.state() as u8) {
         return Err(Error::new(
           Status::GenericFailure,
           format!("Failed to set 'ip': {:?}", err),
@@ -237,10 +241,11 @@ impl Host {
         },
         Ok(None) => {}
         Err(e) if e.kind() == std::io::ErrorKind::ConnectionReset => {
-          // eprintln!("Connection reset. Retrying...");
+          // eprintln!("Connection reset: {:?}", e);
           // ignore
         }
         Err(e) => {
+          // eprintln!("Error connection: {:?}", e);
           return Err(Error::new(
             Status::GenericFailure,
             format!("ENet service error: {}", e),

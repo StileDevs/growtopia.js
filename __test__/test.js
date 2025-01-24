@@ -12,10 +12,14 @@ const { Client } = require("../dist/index.js");
 const server = new Client({
   enet: {
     useNewPacket: {
-      asServer: true
+      asServer: false,
+      asClient: false
     }
   }
 });
+
+// server.connect("0.0.0.0", 17091);
+// server.host.disconnectNow(0);
 
 server.on("connect", (netID) => {
   console.log("Connected ", netID);
@@ -39,7 +43,6 @@ server.listen();
 
   await item.decode();
   await item.encode();
-  console.log(server.host.port);
 })();
 
 async function Web() {
@@ -67,9 +70,9 @@ async function Web() {
     let str = "";
 
     str += `server|127.0.0.1\n`;
+    // str += `type2|1\n`;
 
-    const randPort = 17091;
-    str += `port|${randPort}\nloginurl|login.growserver.app:8080\ntype|1\n#maint|test\nmeta|ignoremeta\nRTENDMARKERBS1001`;
+    str += `port|17091\nloginurl|login.growserver.app:8080\ntype|1\n#maint|test\nmeta|ignoremeta\nRTENDMARKERBS1001`;
 
     return ctx.body(str);
   });
@@ -97,16 +100,6 @@ async function Web() {
     const html = readFileSync(join(__dirname, "..", "assets", "website", "login.html"), "utf-8");
     return ctx.html(html);
   });
-
-  serve(
-    {
-      fetch: app.fetch,
-      port: 80
-    },
-    (info) => {
-      console.log(`⛅ Running HTTP server on http://localhost`);
-    }
-  );
 
   serve(
     {
