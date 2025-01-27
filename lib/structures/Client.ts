@@ -16,8 +16,7 @@ export class Client extends EventEmitter {
         port: options?.enet?.port ?? 17091,
         maxPeers: options?.enet?.maxPeers ?? 1024,
         useNewPacket: {
-          asClient: options?.enet?.useNewPacket?.asClient ?? false,
-          asServer: options?.enet?.useNewPacket?.asServer ?? false
+          asClient: options?.enet?.useNewPacket?.asClient ?? false
         },
         channelLimit: options?.enet?.channelLimit ?? 2
       }
@@ -28,8 +27,7 @@ export class Client extends EventEmitter {
       this.config.enet?.port!,
       this.config.enet?.maxPeers!,
       this.config.enet?.channelLimit!,
-      this.config.enet?.useNewPacket?.asClient!,
-      this.config.enet?.useNewPacket?.asServer!
+      this.config.enet?.useNewPacket?.asClient!
     );
   }
 
@@ -80,8 +78,7 @@ export class Client extends EventEmitter {
     try {
       this.host.setEmitter(this.emit.bind(this));
 
-      const acceptPromise = () =>
-        new Promise((resolve) => setImmediate(() => resolve(this.host.service())));
+      const acceptPromise = () => new Promise((resolve) => setImmediate(() => resolve(this.host.service())));
 
       const loop = async () => {
         while (true) await acceptPromise();
