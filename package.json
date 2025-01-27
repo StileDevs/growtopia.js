@@ -1,7 +1,7 @@
 {
   "name": "growtopia.js",
   "description": "A Rust based, cross-platform, high-performance Growtopia private server framework utilizing Node.js, Bun.js.",
-  "version": "2.0.10",
+  "version": "2.0.11",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -67,9 +67,10 @@
   "scripts": {
     "docs": "rimraf docs && typedoc",
     "artifacts": "napi artifacts",
-    "build": "nr build:ts && napi build --platform --js native.js --dts native.d.ts --release",
+    "build": "nr build:ts && nr build:release",
     "build:ts": "rimraf dist && tsc",
-    "build:debug": "napi build --platform --js native.js --dts native.d.ts ",
+    "build:debug": "napi build --platform --js native.js --dts native.d.ts",
+    "build:release": "nr build:debug --release",
     "prepublishOnly": "napi prepublish -t npm",
     "test": "ava",
     "universal": "napi universal",
