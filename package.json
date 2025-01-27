@@ -63,7 +63,11 @@
     "enet",
     "udp"
   ],
-  "author": "JadlionHD <jadlion.dev@gmail.com>",
+  "author": {
+    "name": "JadlionHD",
+    "email": "jadlion.dev@gmail.com",
+    "url": "https://stile.jad.li"
+  },
   "scripts": {
     "docs": "rimraf docs && typedoc",
     "artifacts": "napi artifacts",
