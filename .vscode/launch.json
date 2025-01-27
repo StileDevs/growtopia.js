@@ -4,7 +4,7 @@
       "type": "lldb",
       "request": "launch",
       "sourceLanguages": ["rust"],
-      "name": "Debug example",
+      "name": "Debug Rust",
       "program": "node",
       "args": ["${workspaceFolder}/__test__/test.js"],
       "cwd": "${workspaceFolder}"
