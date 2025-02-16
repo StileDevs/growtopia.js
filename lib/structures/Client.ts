@@ -1,5 +1,5 @@
 import type { ClientOptions, Sendable } from "../../types";
-import EventEmitter from "eventemitter3";
+import EventEmitter from "events";
 import { Host } from "../../native";
 import { Variant } from "../packets/Variant";
 

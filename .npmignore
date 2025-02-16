@@ -17,3 +17,6 @@ tsconfig.json
 src
 lib
 renovate.json
+build.rs
+Cargo.toml
+.vscode
