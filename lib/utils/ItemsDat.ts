@@ -29,7 +29,7 @@ export class ItemsDat {
 
   private getWriteSize(items: ItemDefinition[]) {
     // magic num came from counting numeric size
-    let size = 83 * items.length;
+    let size = 85 * items.length;
 
     for (const item of items) {
       const keys = Object.keys(item);
@@ -137,8 +137,8 @@ export class ItemsDat {
         if (this.meta.version >= 16) item.itemRenderer = await this.readString({ id: item.id });
         if (this.meta.version >= 17) item.extraFlags1 = this.readI32();
         if (this.meta.version >= 18) item.extraHash1 = this.readI32();
-        if (this.meta.version >= 19)
-          item.unknownBytes2 = this.data.subarray(this.mempos, (this.mempos += 9));
+        if (this.meta.version >= 19) item.unknownBytes2 = this.data.subarray(this.mempos, (this.mempos += 9));
+        if (this.meta.version! >= 21) item.unknownInt1 = this.readI16();
       }
       this.meta.items.push(item);
     }
@@ -225,8 +225,7 @@ export class ItemsDat {
         if (this.meta.version! >= 13) this.writeI32(item.flags5!);
         if (this.meta.version! >= 14) this.writeI32(item.unknownInt1!);
         if (this.meta.version! >= 15) {
-          if (Buffer.isBuffer(item.unknownBytes1))
-            for (const byte of item.unknownBytes1) this.writeU8(byte);
+          if (Buffer.isBuffer(item.unknownBytes1)) for (const byte of item.unknownBytes1) this.writeU8(byte);
 
           await this.writeString(item.extraTexture || "", item.id!);
         }
@@ -237,9 +236,9 @@ export class ItemsDat {
         if (this.meta.version! >= 17) this.writeI32(item.extraFlags1!);
         if (this.meta.version! >= 18) this.writeI32(item.extraHash1!);
         if (this.meta.version! >= 19) {
-          if (Buffer.isBuffer(item.unknownBytes2))
-            for (const byte of item.unknownBytes2) this.writeU8(byte);
+          if (Buffer.isBuffer(item.unknownBytes2)) for (const byte of item.unknownBytes2) this.writeU8(byte);
         }
+        if (this.meta.version! >= 21) this.writeI16(item.unknownShort1!);
       }
     }
     this.mempos = 0;
@@ -315,16 +314,11 @@ export class ItemsDat {
     const len = this.data.readInt16LE(this.mempos);
     this.mempos += 2;
 
-    if (!opts.encoded)
-      return this.data.toString("utf-8", this.mempos, (this.mempos += len)) as string;
+    if (!opts.encoded) return this.data.toString("utf-8", this.mempos, (this.mempos += len)) as string;
     else {
       const chars = [];
       for (let i = 0; i < len; i++) {
-        chars.push(
-          String.fromCharCode(
-            this.data[this.mempos] ^ this.key.charCodeAt((opts.id! + i) % this.key.length)
-          )
-        );
+        chars.push(String.fromCharCode(this.data[this.mempos] ^ this.key.charCodeAt((opts.id! + i) % this.key.length)));
         this.mempos++;
       }
 
@@ -347,8 +341,7 @@ export class ItemsDat {
       } else {
         const chars = [];
 
-        for (let i = 0; i < str.length; i++)
-          chars.push(str.charCodeAt(i) ^ this.key.charCodeAt((i + id) % this.key.length));
+        for (let i = 0; i < str.length; i++) chars.push(str.charCodeAt(i) ^ this.key.charCodeAt((i + id) % this.key.length));
 
         for (const char of chars) this.data[this.mempos++] = char;
       }

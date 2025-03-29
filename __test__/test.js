@@ -38,10 +38,11 @@ server.listen();
 
 (async () => {
   await Web();
-  const file = readFileSync("./assets/items-v18.dat");
+  const file = readFileSync("./assets/items.dat");
   const item = new ItemsDat(file);
 
   await item.decode();
+  console.log(item);
   await item.encode();
 })();
 
@@ -122,9 +123,7 @@ async function Web() {
       port: 8080,
       createServer,
       serverOptions: {
-        key: readFileSync(
-          join(__dirname, "..", "assets", "ssl", "_wildcard.growserver.app-key.pem")
-        ),
+        key: readFileSync(join(__dirname, "..", "assets", "ssl", "_wildcard.growserver.app-key.pem")),
         cert: readFileSync(join(__dirname, "..", "assets", "ssl", "_wildcard.growserver.app.pem"))
       }
     },

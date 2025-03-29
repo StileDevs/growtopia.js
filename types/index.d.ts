@@ -66,6 +66,7 @@ export interface ItemDefinition {
   extraFlags1?: number; // NOTE: not sure what this does
   extraHash1?: number; // NOTE: not sure what this does
   unknownBytes2?: Buffer; // NOTE: not sure what this does
+  unknownShort1?: number; // NOTE: not sure what this does
 }
 
 export interface ItemsDatMeta {
