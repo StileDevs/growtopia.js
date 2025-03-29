@@ -1,7 +1,7 @@
 {
   "name": "growtopia.js",
   "description": "A Rust based, cross-platform, high-performance Growtopia private server framework utilizing Node.js, Bun.js.",
-  "version": "2.0.14",
+  "version": "2.0.15",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
