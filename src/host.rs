@@ -22,6 +22,7 @@ impl Host {
     peer_limit: u32,
     channel_limit: u8,
     using_new_packet: bool,
+    using_new_packet_server: bool,
   ) -> Self {
     let host_addr: String = format!("{ip_address}:{port}");
 
@@ -43,6 +44,7 @@ impl Host {
         compressor: Some(Box::new(enet::RangeCoder::new())),
         checksum: Some(Box::new(enet::crc32)),
         using_new_packet,
+        using_new_packet_server,
         ..Default::default()
       },
     )
