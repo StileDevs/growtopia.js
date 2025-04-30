@@ -202,7 +202,7 @@ export interface ENetServerOptions {
   useNewPacket?: {
     asClient?: boolean;
   };
-  useNewServerPacket: boolean;
+  useNewServerPacket?: boolean;
   channelLimit?: number;
 }
 
