@@ -58,6 +58,7 @@
   "repository": "https://github.com/StileDevs/growtopia.js",
   "keywords": [
     "growtopia",
+    "server",
     "rust",
     "enet",
     "udp"
