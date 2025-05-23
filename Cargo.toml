@@ -6,9 +6,12 @@ version = "0.0.0"
 [lib]
 crate-type = ["cdylib"]
 
+[dependencies.rusty_enet]
+git = "https://github.com/StileDevs/rusty_enet.git"
+rev = "d7b9d308c851e822bbdd884ce28c403218b2c792"
+# path = "D:\\Projects\\NodeJS_Projects\\StileDevs\\rusty_enet" 
+
 [dependencies]
-rusty_enet = { git = "https://github.com/StileDevs/rusty_enet.git" }
-# rusty_enet = { path = "D:\\Projects\\NodeJS_Projects\\StileDevs\\rusty_enet" }
 # Default enable napi4 feature, see https://nodejs.org/api/n-api.html#node-api-version-matrix
 napi = { version = "2.12.2", default-features = false, features = ["napi4"] }
 napi-derive = "2.12.2"
