@@ -169,13 +169,13 @@ impl Host {
   }
 
   #[napi]
-  pub fn send(&mut self, net_id: u32, mut data: Buffer, channel_id: u8) -> Result<bool> {
+  pub fn send(&mut self, net_id: u32, data: Buffer, channel_id: u8) -> Result<bool> {
     let peer = self
       .host
       .get_peer_mut(enet::PeerID(net_id.try_into().unwrap()))
       .unwrap();
 
-    let packet = enet::Packet::reliable(data.as_mut());
+    let packet = enet::Packet::reliable(data.as_ref());
 
     if let Err(e) = peer.send(channel_id, &packet) {
       return Err(Error::new(
