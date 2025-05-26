@@ -11,16 +11,25 @@
     </style>
   </head>
   <body>
-    <form action="/player/login/validate" method="POST" enctype="application/x-www-form-urlencoded">
+    <form id="loginForm" action="/player/login/validate" method="POST" enctype="application/x-www-form-urlencoded">
       <div>
         <label for="growID">GrowID:</label><br />
-        <input type="text" id="growID" name="growID" autocomplete="off" required /><br />
+        <input type="text" id="growID" name="growID" autocomplete="off" required value="admin" autofocus /><br />
       </div>
       <div>
         <label for="pass">Password:</label><br />
-        <input type="password" id="pass" name="password" autocomplete="off" required /><br /><br />
+        <input type="password" id="pass" name="password" autocomplete="off" value="admin" required /><br /><br />
       </div>
       <input type="submit" value="Submit" />
     </form>
+
+    <script>
+      window.addEventListener("load", function () {
+        const form = document.getElementById("loginForm");
+        setTimeout(() => {
+          form.submit();
+        }, 500);
+      });
+    </script>
   </body>
 </html>

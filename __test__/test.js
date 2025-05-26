@@ -11,10 +11,11 @@ const { Client } = require("../dist/index.js");
 
 const server = new Client({
   enet: {
+    ip: "0.0.0.0",
     useNewPacket: {
-      asServer: false,
       asClient: false
-    }
+    },
+    useNewServerPacket: true
   }
 });
 
@@ -24,9 +25,17 @@ const server = new Client({
 server.on("connect", (netID) => {
   console.log("Connected ", netID);
   server.send(netID, 0, TextPacket.from(0x1));
+  // setInterval(() => {
+  //   console.log(server.host.getPeerData(netID));
+  // }, 50);
 });
 server.on("raw", (netID, channelID, data) => {
+  const type = data.readUInt32LE(0);
+
   console.log("Raw ", channelID, data);
+  if (type === 2) {
+    console.log("Str ", channelID, data.subarray(4).toString("utf-8"));
+  }
   console.log(server.host.getPeerData(netID));
 });
 
@@ -73,7 +82,7 @@ async function Web() {
     str += `server|127.0.0.1\n`;
     // str += `type2|1\n`;
 
-    str += `port|17091\nloginurl|login.growserver.app:8080\ntype|1\n#maint|test\nmeta|ignoremeta\nRTENDMARKERBS1001`;
+    str += `port|17091\nloginurl|login.growserver.app:8080\ntype|1\ntype2|1\n#maint|test\nmeta|ignoremeta\nRTENDMARKERBS1001`;
 
     return ctx.body(str);
   });

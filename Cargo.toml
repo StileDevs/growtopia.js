@@ -8,8 +8,8 @@ crate-type = ["cdylib"]
 
 [dependencies.rusty_enet]
 git = "https://github.com/StileDevs/rusty_enet.git"
-rev = "fd461d47403fb3bb8577def6bdc04e1614b392f4"
-# path = "D:\\Projects\\NodeJS_Projects\\StileDevs\\rusty_enet"
+rev = "b67cf73c9b00fb59b097938fa938dca2b2d9d521"
+#path = "D:\\Projects\\NodeJS_Projects\\StileDevs\\rusty_enet"
 
 [dependencies]
 # Default enable napi4 feature, see https://nodejs.org/api/n-api.html#node-api-version-matrix
