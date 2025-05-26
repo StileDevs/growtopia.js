@@ -73,7 +73,7 @@
     "build": "nr build:ts && nr build:release",
     "build:ts": "rimraf dist && tsc",
     "build:debug": "napi build --platform --js native.js --dts native.d.ts",
-    "build:release": "nr build:debug",
+    "build:release": "nr build:debug --release",
     "prepublishOnly": "napi prepublish -t npm",
     "test": "ava",
     "universal": "napi universal",
