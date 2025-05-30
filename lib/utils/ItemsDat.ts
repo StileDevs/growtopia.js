@@ -138,7 +138,7 @@ export class ItemsDat {
         if (this.meta.version >= 17) item.extraFlags1 = this.readI32();
         if (this.meta.version >= 18) item.extraHash1 = this.readI32();
         if (this.meta.version >= 19) item.unknownBytes2 = this.data.subarray(this.mempos, (this.mempos += 9));
-        if (this.meta.version! >= 21) item.unknownInt1 = this.readI16();
+        if (this.meta.version! >= 21) item.unknownShort1 = this.readI16();
       }
       this.meta.items.push(item);
     }
