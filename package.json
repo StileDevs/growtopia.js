@@ -78,23 +78,5 @@
     "test": "ava",
     "universal": "napi universal",
     "version": "napi version"
-  },
-  "optionalDependencies": {
-    "growtopia.js-win32-x64-msvc": "2.1.6",
-    "growtopia.js-darwin-x64": "2.1.6",
-    "growtopia.js-linux-x64-gnu": "2.1.6",
-    "growtopia.js-darwin-arm64": "2.1.6",
-    "growtopia.js-android-arm64": "2.1.6",
-    "growtopia.js-linux-arm64-gnu": "2.1.6",
-    "growtopia.js-linux-arm64-musl": "2.1.6",
-    "growtopia.js-win32-arm64-msvc": "2.1.6",
-    "growtopia.js-linux-arm-gnueabihf": "2.1.6",
-    "growtopia.js-linux-arm-musleabihf": "2.1.6",
-    "growtopia.js-linux-x64-musl": "2.1.6",
-    "growtopia.js-freebsd-x64": "2.1.6",
-    "growtopia.js-win32-ia32-msvc": "2.1.6",
-    "growtopia.js-android-arm-eabi": "2.1.6",
-    "growtopia.js-darwin-universal": "2.1.6",
-    "growtopia.js-linux-riscv64-gnu": "2.1.6"
   }
 }
