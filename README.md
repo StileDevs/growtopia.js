@@ -58,7 +58,7 @@ client.listen();
 
 ## Links
 
-- [Documentation](https://jadlionhd.github.io/growtopia.js/)
+- [Documentation](https://gtjs.jad.li/)
 - [Discord Server](https://discord.gg/sGrxfKZY5t)
 
 ## Credits
