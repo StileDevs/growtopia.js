@@ -1,4 +1,4 @@
-const { TextPacket, ItemsDat } = require("../dist/index.js");
+const { TextPacket, ItemsDat, Peer } = require("../dist/index.js");
 const { Hono } = require("hono");
 const { logger } = require("hono/logger");
 const { serveStatic } = require("@hono/node-server/serve-static");
@@ -24,19 +24,32 @@ const server = new Client({
 
 server.on("connect", (netID) => {
   console.log("Connected ", netID);
+  
+  const nativePeer = server.host.getPeer(netID);
+  console.log("Native peer:", nativePeer);
+  console.log(`IP: ${nativePeer.ip}, Port: ${nativePeer.port}, RTT: ${nativePeer.rtt}ms`);
+  console.log(`MTU: ${nativePeer.mtu}, Channels: ${nativePeer.channelCount}`);
+  console.log(`Packets sent: ${nativePeer.packetsSent}, lost: ${nativePeer.packetsLost}`);
+  
+  const peer = new Peer(server, netID);
+  console.log("Peer wrapper created");
+  
   server.send(netID, 0, TextPacket.from(0x1));
-  // setInterval(() => {
-  //   console.log(server.host.getPeerData(netID));
-  // }, 50);
 });
+
 server.on("raw", (netID, channelID, data) => {
   const type = data.readUInt32LE(0);
+  const nativePeer = server.host.getPeer(netID);
 
   console.log("Raw ", channelID, data);
   if (type === 2) {
     console.log("Str ", channelID, data.subarray(4).toString("utf-8"));
   }
-  console.log(server.host.getPeerData(netID));
+  console.log("RAW");
+  console.log("Native peer:", nativePeer);
+  console.log(`IP: ${nativePeer.ip}, Port: ${nativePeer.port}, RTT: ${nativePeer.rtt}ms`);
+  console.log(`MTU: ${nativePeer.mtu}, Channels: ${nativePeer.channelCount}`);
+  console.log(`Packets sent: ${nativePeer.packetsSent}, lost: ${nativePeer.packetsLost}`);
 });
 
 server.on("disconnect", (netID) => {

@@ -1,4 +1,4 @@
-import type { Host } from "../../native";
+import type { Host, NativePeer } from "../../native";
 import type { NativePeerData, PeerData, Sendable } from "../../types";
 import { Variant } from "../packets/Variant";
 import { Client } from "./Client";
@@ -15,8 +15,8 @@ export class Peer<T extends PeerData> {
     this.client = client;
   }
 
-  public get enet(): NativePeerData {
-    return this.client.host.getPeerData(this.data.netID) as NativePeerData;
+  public get native(): NativePeer {
+    return this.client.host.getPeer(this.data.netID);
   }
 
   /**
@@ -69,17 +69,18 @@ export class Peer<T extends PeerData> {
    * @param type Type of disconnection. Defaults to `later`.
    */
   public disconnect(type: "now" | "later" | "normal" = "later") {
+    const nativePeer = this.native;
     switch (type) {
       case "normal": {
-        this.client.host.disconnect(this.data.netID);
+        nativePeer.disconnect(this.client.host, 0);
         break;
       }
       case "later": {
-        this.client.host.disconnectLater(this.data.netID);
+        nativePeer.disconnectLater(this.client.host, 0);
         break;
       }
       case "now": {
-        this.client.host.disconnectNow(this.data.netID);
+        nativePeer.disconnectNow(this.client.host, 0);
         break;
       }
     }

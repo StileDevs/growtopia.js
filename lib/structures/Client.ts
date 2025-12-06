@@ -29,7 +29,12 @@ export class Client extends EventEmitter {
       this.config.enet?.maxPeers!,
       this.config.enet?.channelLimit!,
       this.config.enet?.useNewPacket?.asClient!,
-      this.config.enet?.useNewServerPacket!
+      this.config.enet?.useNewServerPacket!,
+      options?.enet?.incomingBandwidthLimit ?? null,
+      options?.enet?.outgoingBandwidthLimit ?? null,
+      options?.enet?.enableCompressor ?? null,
+      options?.enet?.enableChecksum ?? null,
+      options?.enet?.seed ?? null
     );
   }
 

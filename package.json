@@ -1,7 +1,7 @@
 {
   "name": "growtopia.js",
   "description": "A Rust based, cross-platform Growtopia private server library that support Node.js & Bun.js.",
-  "version": "2.1.7",
+  "version": "2.2.0",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -68,9 +68,10 @@
     "url": "https://stile.jad.li"
   },
   "scripts": {
+    "clean": "rimraf docs && rimraf dist && cargo clean",
     "docs": "rimraf docs && typedoc",
     "artifacts": "napi artifacts",
-    "build": "nr build:ts && nr build:release",
+    "build": "nr build:release && nr build:ts",
     "build:ts": "rimraf dist && tsc",
     "build:debug": "napi build --platform --js native.js --dts native.d.ts",
     "build:release": "nr build:debug --release",
@@ -78,5 +79,23 @@
     "test": "ava",
     "universal": "napi universal",
     "version": "napi version"
+  },
+  "optionalDependencies": {
+    "growtopia.js-win32-x64-msvc": "2.2.0",
+    "growtopia.js-darwin-x64": "2.2.0",
+    "growtopia.js-linux-x64-gnu": "2.2.0",
+    "growtopia.js-darwin-arm64": "2.2.0",
+    "growtopia.js-android-arm64": "2.2.0",
+    "growtopia.js-linux-arm64-gnu": "2.2.0",
+    "growtopia.js-linux-arm64-musl": "2.2.0",
+    "growtopia.js-win32-arm64-msvc": "2.2.0",
+    "growtopia.js-linux-arm-gnueabihf": "2.2.0",
+    "growtopia.js-linux-arm-musleabihf": "2.2.0",
+    "growtopia.js-linux-x64-musl": "2.2.0",
+    "growtopia.js-freebsd-x64": "2.2.0",
+    "growtopia.js-win32-ia32-msvc": "2.2.0",
+    "growtopia.js-android-arm-eabi": "2.2.0",
+    "growtopia.js-darwin-universal": "2.2.0",
+    "growtopia.js-linux-riscv64-gnu": "2.2.0"
   }
 }

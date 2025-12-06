@@ -204,6 +204,11 @@ export interface ENetServerOptions {
   };
   useNewServerPacket?: boolean;
   channelLimit?: number;
+  incomingBandwidthLimit?: number;
+  outgoingBandwidthLimit?: number;
+  enableCompressor?: boolean;
+  enableChecksum?: boolean;
+  seed?: number;
 }
 
 export interface Caching {

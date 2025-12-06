@@ -310,6 +310,7 @@ if (!nativeBinding) {
   throw new Error(`Failed to load native binding`)
 }
 
-const { Host } = nativeBinding
+const { Host, NativePeer } = nativeBinding
 
 module.exports.Host = Host
+module.exports.NativePeer = NativePeer
