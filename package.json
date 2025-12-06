@@ -13,8 +13,8 @@
     }
   },
   "napi": {
-    "name": "growtopia-js",
-    "triples": {
+    "binaryName": "growtopia-js",
+    "targets": {
       "additional": [
         "aarch64-apple-darwin",
         "aarch64-linux-android",
