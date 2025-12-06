@@ -71,12 +71,13 @@
     "clean": "rimraf docs && rimraf dist && cargo clean",
     "docs": "rimraf docs && typedoc",
     "artifacts": "napi artifacts",
-    "build": "nr build:release && nr build:ts",
+    "build": "nr build:ts && nr build:release",
     "build:ts": "rimraf dist && tsc && echo Done",
     "build:debug": "napi build --platform --js native.js --dts native.d.ts",
     "build:release": "nr build:debug --release",
     "prepublishOnly": "napi prepublish -t npm",
     "test": "ava",
+    "test:server": "nr build:release && nr build:ts",
     "universal": "napi universal",
     "version": "napi version"
   }
