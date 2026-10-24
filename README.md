@@ -1,3 +1,6 @@
+> # Discontinued (Archived)
+> This project has been archived since I've been replace it with [growtopia.wasm](https://github.com/StileDevs/growtopia.wasm)
+
 [![GrowtopiaJS](/assets/images/banner.png)][github-growtopia-js-url]
 [![Github Stars](https://img.shields.io/github/stars/StileDevs/growtopia.js?style=flat-square&link=https%3A%2F%2Fgithub.com%2FStileDevs%2Fgrowtopia.js)][github-star-growtopia-js-url]
 [![NPM Version](https://img.shields.io/npm/v/growtopia.js?style=flat-square&link=https%3A%2F%2Fnpmjs.com%2Fpackage%2Fgrowtopia.js)][npm-growtopia-js-url]
